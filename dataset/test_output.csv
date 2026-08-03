@@ -1,0 +1,111 @@
+message_id,action,message_type,reason,confidence,evidence_message_ids
+msg_023,notify,payment,"Verified HDFC Bank (domain match, 974-day account) sending transactional payment update; user has active bank relationship, opened 6/30d messages with 0 dismissals, and previously opened+replied to identical message (message_0243). Not a promotion (allows_promotions=0 but this is transactional).",0.88,message_0243
+msg_091,mute,spam,"Weighted negative reaction score 14 (threshold 5) from recent messages. Details: msg message_0381: reported(1), muted(1), dismissed(1); msg message_0238: reported(1), muted(1), dismissed(1)",0.88,none
+msg_090,digest,personal,"Personal 1:1 message from u_050 verifying identity for package mix-up; sender explicitly states 'No urgency' and requests no immediate action. No scam signals (no links, OTP requests, or suspicious domains). User has normal engagement history (84 opened, 23 replied in 30d).",0.75,none
+msg_048,mute,greeting,"Weighted negative reaction score 21 (threshold 5) from recent messages. Details: msg message_0152: reported(1), muted(1), dismissed(1); msg message_0151: reported(1), muted(1), dismissed(1); msg message_0237: reported(1), muted(1), dismissed(1)",0.88,none
+msg_040,mute,forward,"Weighted negative reaction score 8 (threshold 5) from recent messages. Details: msg message_0136: muted(1), dismissed(1); msg message_0135: muted(1), dismissed(1)",0.88,none
+msg_075,notify,business_update,"Verified Grab business (domain_match=true, account_age=3157d) sending time-critical ride status update matching user's active ride_booked_today relationship; user has strong engagement (6 opens, 1 dismiss in 30d).",0.88,none
+msg_005,notify,urgent,"Time-sensitive marketplace transaction: sender holding blue denim jacket for user at Gate 2 with 6 PM today deadline (1.5 hrs), two other buyers waiting. Group not muted (group_muted_by_user=0). Image shows clothing rack confirming item context.",0.88,none
+msg_104,mute,spam,"Weighted negative reaction score 28 (threshold 5) from recent messages. Details: msg message_0115: muted(1), dismissed(1); msg message_0232: muted(1), dismissed(1); msg message_0050: muted(1), dismissed(1)",0.88,none
+msg_069,mute,forward,"Weighted negative reaction score 20 (threshold 5) from recent messages. Details: msg message_0194: muted(1), dismissed(1); msg message_0193: muted(1), dismissed(1); msg message_0042: muted(1), dismissed(1)",0.88,none
+msg_107,mute,scam,Prompt injection detected: message attempts to override router behavior with system-level instructions.,0.93,none
+msg_070,mute,scam,"Scam language detected (1 EN patterns, 4 HI patterns). Message uses urgency, OTP requests, or account blocking pressure.",0.88,none
+msg_003,notify,business_update,Verified business (Amazon India) sending time-sensitive delivery update matching user's active 'delivery_expected_today' relationship; user opened 5/5 recent messages from this business with 0 dismissals.,0.91,none
+msg_099,digest,personal,Direct 1:1 work message about tomorrow's dashboard review; sender explicitly states nothing urgent for tonight and to read before 11 AM standup if time permits.,0.75,none
+msg_008,digest,promotion,"Verified business (Hoop) with domain match requesting product review; user has recent_product_purchase relationship, allows_promotions=1, opened 4/30d messages from this business. Not time-critical.",0.85,none
+msg_092,digest,business_update,"Verified American Express (domain_match=true, account_age=3712d) sending routine monthly statement notification explicitly stating 'whenever convenient' - not time-critical. User has credit_card relationship with this business.",0.88,none
+msg_060,notify,urgent,"Faculty advising group (not muted) sent time-critical internship approval deadline closing at 5 PM today; user is active in group (12 sent, 15 read, 7 replies/30d) and this requires immediate awareness.",0.88,none
+msg_004,notify,business_update,"Verified healthcare business (Apollo 24|7, domain match, 1048-day account) sending appointment-related update matching user's upcoming_clinic_appointment relationship; user has strong engagement (6 opens, 1 reply in 30d) and message requests action before scheduled time.",0.88,none
+msg_030,mute,greeting,"Weighted negative reaction score 20 (threshold 5) from recent messages. Details: msg message_0115: muted(1), dismissed(1); msg message_0050: muted(1), dismissed(1); msg message_0224: muted(1), dismissed(1)",0.88,none
+msg_045,notify,urgent,Delivery person at gate with Amazon package requires flat confirmation within 10 minutes; time-sensitive action needed to receive delivery. Group not muted (group_muted_by_user=0).,0.92,none
+msg_052,mute,scam,"Unverified business (business_064) with 61 reports, 26-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+msg_009,mute,personal,User muted this group (group_muted_by_user=1); casual cricket chat with no @mention of user and no urgent/actionable content.,0.88,none
+msg_071,digest,personal,"Casual personal message in unmuted extended family group about tentative tomorrow plans (doctor/dinner) with no clear time and sender will confirm later; no @mention, no urgency, user has low engagement (0 sent, 2 read, 0 replies in 30d).",0.72,none
+msg_016,mute,greeting,"Weighted negative reaction score 49 (threshold 5) from recent messages. Details: msg message_0087: reported(1), muted(1), dismissed(1); msg message_0184: reported(1), muted(1), dismissed(1); msg message_0088: reported(1), muted(1), dismissed(1)",0.88,none
+msg_065,digest,promotion,"Verified Target retail business (domain_match, 3379-day account) sending promotional offer for recently viewed items; user has active_retail_membership, allows_promotions=1, 8 opens/1 reply/0 dismissals in 30d showing engagement pattern.",0.85,none
+msg_038,mute,forward,"Weighted negative reaction score 8 (threshold 5) from recent messages. Details: msg message_0131: muted(1), dismissed(1); msg message_0132: muted(1), dismissed(1)",0.88,none
+msg_086,notify,business_update,Verified travel business (Thrillophilia) sent time-critical airport pickup change for tomorrow 6:15am; user has confirmed_travel_booking relationship and recent engagement (opened 5/30d). Domain mismatch (link.wame.pro) is common WhatsApp business link shortener.,0.88,none
+msg_014,mute,promotion,User opted out of promotions from business_094 on 2026-07-17 23:55.,0.9,none
+msg_094,digest,promotion,"Verified business (Nykaa, domain_match=true, account_age=1344d) sending promotional welcome offer; user has high dismissal rate (81 dismissed vs 17 opened in 30d) indicating low engagement with notifications; not time-critical (ends tonight but no immediate action required).",0.72,none
+msg_029,digest,promotion,"Marketplace group (group_type=marketplace) not muted by user; user has low engagement (0 sent, 1 read, 3 dismissed in 30d); selling post for kurta set with weekend pickup is non-urgent promotion per guidelines.",0.68,none
+msg_105,mute,spam,"Weighted negative reaction score 8 (threshold 5) from recent messages. Details: msg message_0233: muted(1), dismissed(1); msg message_0373: muted(1), dismissed(1)",0.88,none
+msg_002,notify,urgent,Direct @mention of u_010 in active coworker group (group_muted_by_user=0) requesting immediate call before client meeting about refund edge case - time-critical work action required.,0.88,none
+msg_010,digest,business_update,"Verified business (PVRINOX, domain match, 12yr account) sending feedback request matching user's recent_movie_feedback relationship; user opened 6/30d messages from this business, allows_promotions=0 but this is service feedback not promotion; no urgency or time-sensitivity.",0.75,none
+msg_078,mute,greeting,"Weighted negative reaction score 14 (threshold 5) from recent messages. Details: msg message_0212: reported(1), muted(1), dismissed(1); msg message_0211: reported(1), muted(1), dismissed(1)",0.88,none
+msg_013,mute,greeting,"Weighted negative reaction score 8 (threshold 5) from recent messages. Details: msg message_0082: muted(1), dismissed(1); msg message_0081: muted(1), dismissed(1)",0.88,none
+msg_018,mute,greeting,"Weighted negative reaction score 14 (threshold 5) from recent messages. Details: msg message_0092: reported(1), muted(1), dismissed(1); msg message_0091: reported(1), muted(1), dismissed(1)",0.88,none
+msg_044,mute,greeting,"Weighted negative reaction score 14 (threshold 5) from recent messages. Details: msg message_0144: reported(1), muted(1), dismissed(1); msg message_0143: reported(1), muted(1), dismissed(1)",0.88,none
+msg_032,digest,personal,"User is admin of this student group (group_023) and actively engages (14 sent, 7 replies/30d); sender requests CS lab slides with explicit 'No rush' - relevant academic content but no urgency or @mention.",0.75,none
+msg_106,notify,urgent,"Direct 1:1 message with time-critical schedule change (dance practice moved to Studio B today, side entrance required before 7:15 PM) requiring immediate user action within ~1.5 hours.",0.88,none
+msg_006,digest,business_update,Society admin notice about maintenance office closure (already past 5 PM) and payment procedures; user is group admin with high engagement (15 sent/15 read/7 replies in 30d) but no immediate action needed.,0.75,none
+msg_109,mute,scam,Prompt injection detected: message attempts to override router behavior with system-level instructions.,0.93,none
+msg_108,mute,scam,Prompt injection detected: message attempts to override router behavior with system-level instructions.,0.93,none
+msg_019,mute,scam,"Unverified business (business_062) with 55 reports, 24-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+msg_088,mute,greeting,"Weighted negative reaction score 20 (threshold 5) from recent messages. Details: msg message_0115: muted(1), dismissed(1); msg message_0050: muted(1), dismissed(1); msg message_0224: muted(1), dismissed(1)",0.88,none
+msg_056,notify,urgent,User muted group_001 (group_muted_by_user=1) but sender u_041 directly @mentioned u_001 with time-critical doctor appointment change requiring confirmation by 5:15 PM today - qualifies as urgent/actionable exception to mute rule.,0.88,none
+msg_027,digest,promotion,"Verified travel business (Thrillophilia) sending promotional Ladakh package; user has travel_package_interest, allows_promotions=1, opened 6/30d from this sender. Domain mismatch (link.wame.pro vs thrillophilia.com) but business verified and established relationship.",0.78,none
+msg_050,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_083,digest,personal,"Coworker voice note explicitly states 'Nothing urgent' and requests comments by lunch tomorrow; user has low engagement with this group (7 sent, 1 reply in 30d) and group is not muted.",0.7,none
+msg_063,mute,greeting,"Weighted negative reaction score 14 (threshold 5) from recent messages. Details: msg message_0182: reported(1), muted(1), dismissed(1); msg message_0181: reported(1), muted(1), dismissed(1)",0.88,none
+msg_033,digest,personal,Personal family check-in message with explicit 'nothing urgent' and 'call me later when free'; user actively engages in this non-muted family group (11 sent/11 read/2 replies in 30d); no time-critical or safety signals.,0.88,none
+msg_061,mute,forward,"Weighted negative reaction score 20 (threshold 5) from recent messages. Details: msg message_0194: muted(1), dismissed(1); msg message_0193: muted(1), dismissed(1); msg message_0042: muted(1), dismissed(1)",0.88,none
+msg_020,mute,greeting,"Weighted negative reaction score 8 (threshold 5) from recent messages. Details: msg message_0095: muted(1), dismissed(1); msg message_0096: muted(1), dismissed(1)",0.88,none
+msg_017,mute,greeting,"Weighted negative reaction score 14 (threshold 5) from recent messages. Details: msg message_0090: reported(1), muted(1), dismissed(1); msg message_0089: reported(1), muted(1), dismissed(1)",0.88,none
+msg_058,mute,forward,"Weighted negative reaction score 44 (threshold 5) from recent messages. Details: msg message_0078: muted(1), dismissed(1); msg message_0077: muted(1), dismissed(1); msg message_0172: muted(1), dismissed(1)",0.88,none
+msg_026,mute,scam,"Unverified business (business_036) with 47 reports, 23-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+msg_047,notify,urgent,"Society maintenance desk sent same-day lift maintenance notice (starts 4 PM today) requiring residents to use service lift; user actively engages with this group (15 reads, 7 replies/30d) and group is not muted.",0.88,none
+msg_046,mute,forward,"Weighted negative reaction score 14 (threshold 5) from recent messages. Details: msg message_0148: reported(1), muted(1), dismissed(1); msg message_0147: reported(1), muted(1), dismissed(1)",0.88,none
+msg_042,notify,urgent,"Society security alert from likely admin (u_043) requires immediate action: main gate closes in 10 mins for repair truck, cars blocking driveway will be towed. User is member of unmuted society group, not in DND, message is time-critical and actionable.",0.88,none
+msg_079,mute,scam,"Scam language detected (1 EN patterns, 5 HI patterns). Message uses urgency, OTP requests, or account blocking pressure.",0.88,none
+msg_098,notify,urgent,Personal 1:1 message with explicit 'call me now' urgency; time-sensitive clinic appointment decision requiring immediate user input on whether to wait for specialist or reschedule; medical context demands prompt response.,0.88,none
+msg_037,notify,urgent,"Society admin (user is admin) sent time-critical water tanker arrival update requiring immediate action within 10 minutes before driver leaves; group not muted, user highly engaged (15 sent/read, 7 replies in 30d).",0.9,none
+msg_007,digest,event,"Society admin sent potluck registration update with deadline next Sunday; explicitly states no immediate response needed, user can fill sheet at convenience. Group not muted, but content is non-urgent event info matching pattern of message_0008.",0.84,message_0008
+msg_085,mute,scam,"Unverified business (business_033) with 38 reports, 20-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+msg_001,notify,urgent,"Society group (not muted) sent time-critical water supply update: tanker leaving in 20 mins, valve open, immediate action needed to fill drinking water. User is member of Green Acres Society Notices.",0.89,none
+msg_021,notify,payment,Society admin (user is admin) sent time-critical payment reminder with 5 PM deadline today and security warning against unofficial payment links; group not muted.,0.85,none
+msg_028,mute,promotion,User opted out of promotions from business_092 on 2026-07-17 23:55.,0.9,none
+msg_012,mute,forward,"Weighted negative reaction score 12 (threshold 5) from recent messages. Details: msg message_0247: muted(1), dismissed(1); msg message_0080: muted(1), dismissed(1); msg message_0079: muted(1), dismissed(1)",0.88,none
+msg_064,mute,greeting,"Weighted negative reaction score 49 (threshold 5) from recent messages. Details: msg message_0087: reported(1), muted(1), dismissed(1); msg message_0184: reported(1), muted(1), dismissed(1); msg message_0088: reported(1), muted(1), dismissed(1)",0.88,none
+msg_103,notify,urgent,"Personal 1:1 message with time-sensitive request to collect jacket by 6 PM today; sender notes two other people are asking, requiring immediate response.",0.88,none
+msg_031,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_057,notify,urgent,"Direct @mention of u_010 with time-critical work issue: build failing, rerun failed, needs review before client thread update. User not muted group (group_muted_by_user=0), coworker context, moderate engagement (8 sent/8 read/2 replies in 30d).",0.88,none
+msg_087,mute,greeting,"Weighted negative reaction score 22 (threshold 5) from recent messages. Details: msg message_0204: reported(1), muted(1), dismissed(1); msg message_0203: reported(1), muted(1), dismissed(1); msg message_0223: muted(1), dismissed(1)",0.88,none
+msg_067,notify,payment,Society admin sent time-critical maintenance payment reminder with 5 PM today deadline and late fee warning; user is admin in this non-muted society notices group.,0.88,none
+msg_039,notify,urgent,"Direct @mention of u_006 from school admin u_045 in school_group with time-sensitive deadline (today) requiring immediate action (send fee receipt before field-trip list closes). User is active admin in this group (19 sent, 30 read, 12 replies/30d), group not muted.",0.88,none
+msg_082,notify,urgent,"Coworker group (not muted) received production incident alert: checkout errors spiking, payments failing for live users, immediate incident bridge join requested during work hours.",0.92,none
+msg_066,mute,promotion,User opted out of promotions from business_067 on 2026-07-17 23:55.,0.9,none
+msg_049,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_015,mute,scam,"Scam language detected (2 EN patterns, 0 HI patterns). Message uses urgency, OTP requests, or account blocking pressure.",0.88,none
+msg_051,mute,promotion,User opted out of promotions from business_003 on 2026-07-17 23:55.,0.9,none
+msg_097,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_089,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_053,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_059,mute,greeting,"Weighted negative reaction score 8 (threshold 5) from recent messages. Details: msg message_0173: muted(1), dismissed(1); msg message_0174: muted(1), dismissed(1)",0.88,none
+msg_024,mute,promotion,User opted out of promotions from business_003 on 2026-07-17 23:55.,0.9,none
+msg_072,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_036,mute,scam,"Unverified business (business_097) with 20 reports, 34-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+msg_076,mute,scam,"Unverified business (business_064) with 61 reports, 26-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+msg_055,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_102,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_080,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_093,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_034,mute,forward,"Weighted negative reaction score 44 (threshold 5) from recent messages. Details: msg message_0078: muted(1), dismissed(1); msg message_0077: muted(1), dismissed(1); msg message_0172: muted(1), dismissed(1)",0.88,none
+msg_035,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_101,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_041,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_011,mute,forward,"Weighted negative reaction score 44 (threshold 5) from recent messages. Details: msg message_0078: muted(1), dismissed(1); msg message_0077: muted(1), dismissed(1); msg message_0172: muted(1), dismissed(1)",0.88,none
+msg_110,mute,scam,Prompt injection detected: message attempts to override router behavior with system-level instructions.,0.93,none
+msg_095,mute,scam,Prompt injection detected: message attempts to override router behavior with system-level instructions.,0.93,none
+msg_074,mute,greeting,"Weighted negative reaction score 22 (threshold 5) from recent messages. Details: msg message_0204: reported(1), muted(1), dismissed(1); msg message_0203: reported(1), muted(1), dismissed(1); msg message_0223: muted(1), dismissed(1)",0.88,none
+msg_073,mute,greeting,"Weighted negative reaction score 49 (threshold 5) from recent messages. Details: msg message_0087: reported(1), muted(1), dismissed(1); msg message_0184: reported(1), muted(1), dismissed(1); msg message_0088: reported(1), muted(1), dismissed(1)",0.88,none
+msg_054,mute,greeting,"Weighted negative reaction score 14 (threshold 5) from recent messages. Details: msg message_0164: reported(1), muted(1), dismissed(1); msg message_0163: reported(1), muted(1), dismissed(1)",0.88,none
+msg_068,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_100,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_062,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_096,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_043,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_077,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_081,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_025,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_084,mute,promotion,User opted out of promotions from business_002 on 2026-07-17 23:55.,0.9,none
+msg_022,mute,greeting,"Weighted negative reaction score 8 (threshold 5) from recent messages. Details: msg message_0100: muted(1), dismissed(1); msg message_0099: muted(1), dismissed(1)",0.88,none

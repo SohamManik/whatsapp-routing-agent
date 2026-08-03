@@ -1,0 +1,31 @@
+message_id,action,message_type,reason,confidence,evidence_message_ids
+sample_msg_001,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_002,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_003,notify,urgent,"Direct @mention to u_010 requesting queue numbers and failed-payment screenshots to close client note before EOD - time-critical work request. User has high engagement with sender u_046 in group_004 (opened/replied to 2 similar prod-review messages: message_0170, message_0060).",0.88,message_0170;message_0060
+sample_msg_004,notify,business_update,"Verified business (Amazon) sending delivery update matching user's order history; user opened and replied to 2 prior identical delivery messages within 2 minutes (evidence: message_0004, message_0239), indicating high engagement with time-sensitive delivery notifications.",0.91,message_0004;message_0239
+sample_msg_005,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_006,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_007,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_008,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_009,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_010,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_011,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_012,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_013,mute,greeting,"Weighted negative reaction score 44 (threshold 5) from recent messages ; greeting content in message. Details: msg message_0078: muted(1), dismissed(1); msg message_0077: muted(1), dismissed(1); msg message_0172: muted(1), dismissed(1)",0.88,none
+sample_msg_014,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_015,mute,promotion,User opted out of promotions from business_094 on 2026-07-17 23:55.,0.9,none
+sample_msg_019,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_020,mute,greeting,"Weighted negative reaction score 49 (threshold 5) from recent messages ; group message default. Details: msg message_0087: reported(1), muted(1), dismissed(1); msg message_0184: reported(1), muted(1), dismissed(1); msg message_0088: reported(1), muted(1), dismissed(1)",0.88,none
+sample_msg_041,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_042,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_043,mute,scam,"Unverified business (business_098) with 23 reports, 35-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+sample_msg_044,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_045,mute,greeting,"Weighted negative reaction score 20 (threshold 5) from recent messages ; group message default. Details: msg message_0115: muted(1), dismissed(1); msg message_0050: muted(1), dismissed(1); msg message_0224: muted(1), dismissed(1)",0.88,none
+sample_msg_046,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_047,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_048,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_049,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_050,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_051,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+sample_msg_052,mute,scam,"Weighted negative reaction score 14 (threshold 5) from recent messages ; scam language in current message. Details: msg message_0381: reported(1), muted(1), dismissed(1); msg message_0238: reported(1), muted(1), dismissed(1)",0.88,none
+sample_msg_053,mute,scam,"Weighted negative reaction score 8 (threshold 5) from recent messages ; scam language in current message. Details: msg message_0173: muted(1), dismissed(1); msg message_0174: muted(1), dismissed(1)",0.88,none

@@ -1,0 +1,6 @@
+pandas
+requests
+pydantic
+python-dotenv
+sentence-transformers
+rank-bm25

@@ -1,130 +1,97 @@
-# HackerRank Orchestrate
+# WhatsApp Message Notification Router
 
-Starter repository for the **HackerRank Orchestrate** 24-hour hackathon.
+This project is an intelligent routing agent that processes incoming WhatsApp messages and decides whether to notify the user, digest the message for later, or mute it entirely. It is built to solve the "Signal vs. Noise" problem in modern messaging apps by acting as a strict, context-aware personal assistant.
 
-## Message Notification Router
+## The Architecture (The "Seam")
 
-Build an AI-powered system for WhatsApp that decides which messages deserve immediate attention, which should wait, and which should be muted.
+The system separates **Perception** from **Decision**. It consists of three distinct layers:
 
-The system must reason over multimodal messages, including text messages, image posters/screenshots, and voice notes.
+1. **Pre-LLM Safety Gates (`code/safety/gates.py`)**: Fast, deterministic Python rules that instantly catch prompt injections, obvious scams, opted-out promotions, and repeated negative history. This handles ~40% of cases instantly without LLM costs.
+2. **The Agentic LLM Loop (`code/agent/core.py`)**: A multi-turn reasoning engine powered by Nemotron 550B. The LLM has access to tools to fetch user context, retrieve historical evidence (via BM25 + Cross-Encoder), analyze images, and transcribe voice notes. It investigates ambiguous messages like a human assistant.
+3. **Post-LLM Evaluator (`code/evaluation/post_llm_evaluator.py`)**: A deterministic Python layer that overrides the LLM if it violates hard user constraints (e.g., failing to mute an explicitly muted group).
 
-WhatsApp is noisy. A user can receive family chats, society notices, school updates, co-worker messages, business account promotions, image posters, voice notes, and scams in the same message stream. Treating every message the same creates two bad outcomes: important messages get missed, and unwanted or risky messages interrupt the user.
+## Project Structure
 
-Read [`problem_statement.md`](./problem_statement.md) for the full task spec, input/output schema, allowed values, and submission format.
-
----
-
-## Repository Layout
-
-```text
-.
-├── AGENTS.md                         # Rules for AI coding tools + transcript logging
-├── problem_statement.md              # Full challenge statement
-├── README.md                         # You are here
-└── dataset/
-    ├── messages.csv                  # Messages to route
-    ├── output.csv                    # Blank submission template
-    ├── sample_messages.csv           # Solved examples
-    ├── users.csv                     # User notification behavior
-    ├── groups.csv                    # Group metadata
-    ├── group_members.csv             # User-group relationships
-    ├── business_accounts.csv         # Business sender metadata
-    ├── user_business_history.csv     # User-business history
-    ├── message_history.csv           # Historical messages
-    ├── message_events.csv            # User reactions to historical messages
-    ├── images.csv                    # Image IDs and media file paths
-    ├── voice_notes.csv               # Voice note IDs and media file paths
-    ├── daily_notification_summary.csv
-    └── media/
-        ├── images/
-        └── audio/
+```
+├── code/
+│   ├── agent/
+│   │   ├── core.py           # The main agentic loop and tool-calling logic
+│   │   ├── prompts.py        # System prompt and few-shot examples
+│   │   └── schemas.py        # Pydantic schemas for structured LLM output
+│   ├── data/
+│   │   └── loader.py         # Loads and filters CSV datasets
+│   ├── evaluation/
+│   │   └── post_llm_evaluator.py # Deterministic overrides for LLM decisions
+│   ├── safety/
+│   │   └── gates.py          # Pre-LLM safety checks (prompt injection, scams)
+│   ├── tools/
+│   │   ├── context.py        # Tool to fetch user/group/business context
+│   │   ├── retrieval.py      # BM25 + Cross-Encoder hybrid search
+│   │   ├── vision.py         # NVIDIA NIM API integration for image OCR
+│   │   └── audio.py          # Groq Whisper API for voice transcription
+│   ├── validation/
+│   │   └── output.py         # CSV writing and validation
+│   └── main.py               # Application entry point
+├── dataset/                  # Expected directory for input CSVs
+├── requirements.txt          # Python dependencies
+└── .env                      # API keys
 ```
 
----
+## Setup & Dependencies
 
-## What You Need to Build
+1. **Python Version**: Python 3.9+ is recommended.
+2. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+   *Key dependencies include `pandas`, `requests`, `pydantic`, `sentence-transformers` (for the local cross-encoder), and `rank_bm25`.*
 
-For every row in `dataset/messages.csv`, produce one row in `output.csv` with:
+3. **Environment Variables**:
+   Create a `.env` file in the root directory with the following keys:
+   ```env
+   NVIDIA_API_KEY=your_nvidia_api_key_here
+   GROQ_API_KEY=your_groq_api_key_here
+   ```
 
-| Column | Meaning |
-|---|---|
-| `message_id` | Incoming message ID |
-| `action` | One of `notify`, `digest`, or `mute` |
-| `message_type` | Best-fit message category |
-| `reason` | Short human-readable explanation |
-| `confidence` | Number from `0` to `1` |
-| `evidence_message_ids` | Historical message IDs used as evidence; write `none` if there is no useful evidence |
+## Expected Files
 
-Your system should make personalized decisions using the provided message, user, group, business, media, and historical interaction data.
-For image and voice-note messages, `images.csv` and `voice_notes.csv` only provide file paths; your system should inspect the media files themselves.
+The application expects the following CSV files in the `dataset/` directory:
+- `messages.csv` (The input messages to route)
+- `users.csv`
+- `groups.csv`
+- `group_members.csv`
+- `businesses.csv`
+- `user_business_relationships.csv`
+- `message_history.csv`
+- `message_events.csv`
 
----
+## How to Run
 
-## Suggested Workflow
+To run the full pipeline and generate the routing decisions:
 
-1. Inspect `dataset/sample_messages.csv` to understand the expected output format.
-2. Load `dataset/messages.csv` and all relevant context files.
-3. Build your routing system using any approach: LLMs, retrieval, rules, classifiers, agents, or hybrids.
-4. Write predictions to `output.csv`.
-5. Evaluate your approach on the solved sample rows before submitting.
+```bash
+python -m code.main --input dataset/messages.csv --output dataset/output.csv
+```
 
-You may use any language or runtime. Python, JavaScript, and TypeScript are all reasonable choices.
+### Running the Evaluation (Sample Set)
+To run the system on a smaller sample set and evaluate its accuracy against known ground truths:
+```bash
+python -m code.main --input dataset/sample_messages.csv --output dataset/sample_output.csv --evaluate
+```
 
----
+## Where the Decisions Happen
 
-## Requirements
+If you want to understand how the agent routes a message, follow this flow:
 
-Your solution must:
+1. **Entry Point**: `code/main.py` reads the CSV and passes each row to `run_agent_for_message()`.
+2. **Safety First**: Inside `code/agent/core.py`, it first calls `run_all_safety_gates()` (`code/safety/gates.py`). If a gate triggers, the decision is made instantly.
+3. **The LLM Loop**: If no gate triggers, the message enters the `for turn in range(max_turns)` loop in `code/agent/core.py`. The LLM queries tools, analyzes the response, and eventually outputs a JSON decision.
+4. **Validation & Correction**: The JSON is validated by Pydantic. If it fails, the error is fed back to the LLM to correct itself.
+5. **The Final Override**: The validated decision is passed through `evaluate_decision()` (`code/evaluation/post_llm_evaluator.py`), which applies strict deterministic business rules before finalizing the output.
 
-- be runnable from the terminal
-- read the provided files from `dataset/`
-- produce a valid `output.csv`
-- include one prediction for every `message_id` in `dataset/messages.csv`
-- not use organizer-only files or hardcoded labels
+## Resilience & API Limits
 
-If you use API keys or secrets, read them from environment variables. Never hardcode secrets in the repo.
-
----
-
-## Evaluation
-
-Your `output.csv` will be compared against hidden ground-truth labels.
-
-The scoring will consider:
-
-- correctness of `action`
-- correctness of `message_type`
-- usefulness and consistency of `reason`
-- whether `evidence_message_ids` point to relevant historical messages
-- reasonable confidence calibration
-
-Strong systems will combine retrieval, structured metadata, behavioral history, safety checks, OCR/ASR handling, and contextual reasoning.
-
----
-
-## Chat Transcript Logging
-
-This repo includes an [`AGENTS.md`](./AGENTS.md) file for AI coding tools. It asks compatible tools to append conversation summaries to:
-
-| Platform | Path |
-|---|---|
-| macOS / Linux | `$HOME/hackerrank_orchestrate_august26/log.txt` |
-| Windows | `%USERPROFILE%\hackerrank_orchestrate_august26\log.txt` |
-
-Upload this log as your chat transcript at submission time. Do not paste secrets into the chat.
-
----
-
-## Submission
-
-Submit the following files as instructed by HackerRank:
-
-1. **Code zip**: full runnable solution, prompts/configs, README, and any evaluation files.
-2. **Predictions CSV**: final `output.csv` for all rows in `dataset/messages.csv`.
-3. **Chat transcript**: the `log.txt` described above.
-
-Before submitting, confirm:
-
-- `output.csv` has one row per row in `dataset/messages.csv`.
-- `output.csv` has the exact required columns in the exact required order.
-- Your runnable code and setup instructions are included in `code.zip`.
+The system is heavily engineered to survive rate limits:
+- A mandatory `time.sleep(1.5)` before every Nemotron API call ensures we stay under the 40 requests/minute limit.
+- A 6-tier exponential backoff handles unexpected `429 Too Many Requests` spikes.
+- If the LLM completely fails, a context-aware `_smart_fallback()` ensures a safe, logical default rather than crashing the pipeline.

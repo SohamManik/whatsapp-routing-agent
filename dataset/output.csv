@@ -1,111 +1,111 @@
 message_id,action,message_type,reason,confidence,evidence_message_ids
-msg_023,,,,,
-msg_091,,,,,
-msg_090,,,,,
-msg_048,,,,,
-msg_040,,,,,
-msg_075,,,,,
-msg_005,,,,,
-msg_104,,,,,
-msg_069,,,,,
-msg_107,,,,,
-msg_070,,,,,
-msg_003,,,,,
-msg_099,,,,,
-msg_008,,,,,
-msg_092,,,,,
-msg_060,,,,,
-msg_004,,,,,
-msg_030,,,,,
-msg_045,,,,,
-msg_052,,,,,
-msg_009,,,,,
-msg_071,,,,,
-msg_016,,,,,
-msg_065,,,,,
-msg_038,,,,,
-msg_086,,,,,
-msg_014,,,,,
-msg_094,,,,,
-msg_029,,,,,
-msg_105,,,,,
-msg_002,,,,,
-msg_010,,,,,
-msg_078,,,,,
-msg_013,,,,,
-msg_018,,,,,
-msg_044,,,,,
-msg_032,,,,,
-msg_106,,,,,
-msg_006,,,,,
-msg_109,,,,,
-msg_108,,,,,
-msg_019,,,,,
-msg_088,,,,,
-msg_056,,,,,
-msg_027,,,,,
-msg_050,,,,,
-msg_083,,,,,
-msg_063,,,,,
-msg_033,,,,,
-msg_061,,,,,
-msg_020,,,,,
-msg_017,,,,,
-msg_058,,,,,
-msg_026,,,,,
-msg_047,,,,,
-msg_046,,,,,
-msg_042,,,,,
-msg_079,,,,,
-msg_098,,,,,
-msg_037,,,,,
-msg_007,,,,,
-msg_085,,,,,
-msg_001,,,,,
-msg_021,,,,,
-msg_028,,,,,
-msg_012,,,,,
-msg_064,,,,,
-msg_103,,,,,
-msg_031,,,,,
-msg_057,,,,,
-msg_087,,,,,
-msg_067,,,,,
-msg_039,,,,,
-msg_082,,,,,
-msg_066,,,,,
-msg_049,,,,,
-msg_015,,,,,
-msg_051,,,,,
-msg_097,,,,,
-msg_089,,,,,
-msg_053,,,,,
-msg_059,,,,,
-msg_024,,,,,
-msg_072,,,,,
-msg_036,,,,,
-msg_076,,,,,
-msg_055,,,,,
-msg_102,,,,,
-msg_080,,,,,
-msg_093,,,,,
-msg_034,,,,,
-msg_035,,,,,
-msg_101,,,,,
-msg_041,,,,,
-msg_011,,,,,
-msg_110,,,,,
-msg_095,,,,,
-msg_074,,,,,
-msg_073,,,,,
-msg_054,,,,,
-msg_068,,,,,
-msg_100,,,,,
-msg_062,,,,,
-msg_096,,,,,
-msg_043,,,,,
-msg_077,,,,,
-msg_081,,,,,
-msg_025,,,,,
-msg_084,,,,,
-msg_022,,,,,
+msg_023,notify,payment,"Verified HDFC Bank (domain_match=true, account_age=974d) sending payment update to user with active_bank_account; user opened and replied to identical message (message_0243) in 2 minutes, 0 dismissals from this business.",0.88,message_0243
+msg_091,mute,scam,"Weighted negative reaction score 14 (threshold 5) from recent messages ; scam language in current message. Details: msg message_0381: reported(1), muted(1), dismissed(1); msg message_0238: reported(1), muted(1), dismissed(1)",0.88,none
+msg_090,digest,personal,Personal 1:1 message from u_050 asking to confirm identity for package mix-up; sender explicitly states 'No urgency' and no time-sensitive action required. User u_034 has moderate engagement (84 opened/30d) but no history of similar courier messages.,0.85,none
+msg_048,mute,greeting,"Weighted negative reaction score 21 (threshold 5) from recent messages ; group message default. Details: msg message_0152: reported(1), muted(1), dismissed(1); msg message_0151: reported(1), muted(1), dismissed(1); msg message_0237: reported(1), muted(1), dismissed(1)",0.88,none
+msg_040,mute,greeting,"Weighted negative reaction score 8 (threshold 5) from recent messages ; greeting content in message. Details: msg message_0136: muted(1), dismissed(1); msg message_0135: muted(1), dismissed(1)",0.88,none
+msg_075,notify,business_update,"Verified Grab business (domain match, 3157-day account) sending ride status change for user's active ride booked today (ride_booked_today). User has strong engagement history: opened and replied to both previous ride updates (message_0206, message_0205) within 2 minutes, never dismissed.",0.92,message_0206;message_0205
+msg_005,notify,personal,"Direct personalized offer from seller u_048 user has replied to twice before (message_0065, message_0332); time-critical pickup deadline today 6 PM; user engaged with this sender's similar Gate 2 pickup posts.",0.82,message_0065;message_0332
+msg_104,mute,spam,"Weighted negative reaction score 28 (threshold 5) from recent messages ; personal conversation. Details: msg message_0115: muted(1), dismissed(1); msg message_0232: muted(1), dismissed(1); msg message_0050: muted(1), dismissed(1)",0.88,none
+msg_069,mute,greeting,"Weighted negative reaction score 20 (threshold 5) from recent messages ; greeting content in message. Details: msg message_0194: muted(1), dismissed(1); msg message_0193: muted(1), dismissed(1); msg message_0042: muted(1), dismissed(1)",0.88,none
+msg_107,mute,scam,Prompt injection detected: message attempts to override router behavior with system-level instructions.,0.93,none
+msg_070,mute,scam,"Scam language detected (1 EN patterns, 4 HI patterns). Message uses urgency, OTP requests, or account blocking pressure.",0.88,none
+msg_003,notify,business_update,"Verified Amazon India (domain match) sending delivery update for order ending 4821 matching user's active delivery_expected_today relationship; user opened and replied to 2 identical prior delivery messages (message_0400, message_0031) with 0 dismissals.",0.93,message_0400;message_0031
+msg_099,digest,personal,"Personal 1:1 work message explicitly non-urgent ('Nothing blocking for tonight', 'if you get time'); user opened similar notes from u_046 (message_0227) with 2hr delay and no reply, confirming non-urgent pattern.",0.88,message_0227
+msg_008,digest,promotion,"Verified business (Hoop, domain match, 4267-day account) requesting review for recent purchase; user allows_promotions=1, opened 4/30d messages, 0 dismissals; history shows opens similar requests (message_0296, message_0071) without urgency; user in DND (00:00-07:00, now 06:51).",0.85,message_0296;message_0071
+msg_092,digest,business_update,"Verified American Express (domain match, 10yr account) sending routine monthly statement notification with 'whenever convenient' language - no urgency. User has credit_card relationship and engages with business messages (opened 2/2 recent business msgs).",0.88,none
+msg_060,notify,urgent,"Faculty advising group (not muted) sends time-critical internship deadline reminder (5 PM today). User has strong engagement history: opened and replied to 2 similar deadline messages from same sender u_045 within 2 minutes (message_0284, message_0176).",0.92,message_0284;message_0176
+msg_004,notify,event,"Verified healthcare business (Apollo 24|7, domain_match=1) sending health update matching user's upcoming_clinic_appointment relationship; user opened and replied to identical messages within 2 minutes historically (message_0245, message_0005); message requests action before scheduled time.",0.92,message_0245;message_0005
+msg_030,mute,greeting,"Weighted negative reaction score 20 (threshold 5) from recent messages ; group message default. Details: msg message_0115: muted(1), dismissed(1); msg message_0050: muted(1), dismissed(1); msg message_0224: muted(1), dismissed(1)",0.88,none
+msg_045,notify,urgent,"Society admin/security (u_047) sent time-critical delivery notification requiring flat confirmation within 10 minutes; user has history of opening and replying to this sender's society updates (message_0146, message_0145).",0.88,message_0146;message_0145
+msg_052,mute,scam,"Unverified business (business_064) with 61 reports, 26-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+msg_009,mute,personal,"User muted this group; casual cricket viewing question from sender u_054 with no @mention or urgency (evidence: message_0074, message_0073).",0.85,message_0074;message_0073
+msg_071,digest,personal,"Casual family coordination about tomorrow's tentative doctor/dinner plans with no immediate action needed; user opens but doesn't urgently engage with similar messages from u_041 (evidence: message_0197, message_0198).",0.75,message_0197;message_0198
+msg_016,mute,scam,"Weighted negative reaction score 49 (threshold 5) from recent messages ; scam language in current message. Details: msg message_0087: reported(1), muted(1), dismissed(1); msg message_0184: reported(1), muted(1), dismissed(1); msg message_0088: reported(1), muted(1), dismissed(1)",0.88,none
+msg_065,digest,promotion,"Verified Target (domain_match, 3379-day account) sending retargeting promo; user has active_retail_membership, allows_promotions=1, opened similar promos (message_0261, message_0185). No urgency - generic 'check app before offer expires'.",0.85,message_0261;message_0185
+msg_038,mute,forward,"Weighted negative reaction score 8 (threshold 5) from recent messages ; forwarded message pattern. Details: msg message_0131: muted(1), dismissed(1); msg message_0132: muted(1), dismissed(1)",0.88,none
+msg_086,notify,business_update,Verified travel business (Thrillophilia) sending time-critical airport pickup change for tomorrow 6:15am; user has confirmed_travel_booking relationship and historically opened/replied to identical update in 2 minutes (message_0222).,0.88,message_0222
+msg_014,mute,promotion,User opted out of promotions from business_094 on 2026-07-17 23:55.,0.9,none
+msg_094,digest,promotion,"Verified Nykaa business (domain match, 1344-day account) sending promotional welcome offer; user has high dismissal rate (81/30d) and history of muting after promotional messages (evidence: message_0356 dismissed+muted, message_0391 dismissed+muted).",0.68,message_0356;message_0391
+msg_029,digest,promotion,"Marketplace selling post for kurta set in Myntra Marketplace group; user dismissed notification and muted after similar post 19 days ago (message_0095), opened but didn't engage with same sender's similar post 43 days ago (message_0113). No urgency or @mention.",0.78,message_0095;message_0113
+msg_105,mute,forward,"Weighted negative reaction score 8 (threshold 5) from recent messages ; forwarded message pattern. Details: msg message_0233: muted(1), dismissed(1); msg message_0373: muted(1), dismissed(1)",0.88,none
+msg_002,notify,urgent,"Direct @mention from coworker u_046 requesting call before client meeting on refund edge case - time-critical work matter. User has strong history: opened and replied within 2 min to 2/2 similar @mentions from same sender in this group (message_0003, message_0169). Group not muted.",0.92,message_0003;message_0169
+msg_010,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_078,mute,scam,"Weighted negative reaction score 14 (threshold 5) from recent messages ; scam language in current message. Details: msg message_0212: reported(1), muted(1), dismissed(1); msg message_0211: reported(1), muted(1), dismissed(1)",0.88,none
+msg_013,mute,scam,"Weighted negative reaction score 8 (threshold 5) from recent messages ; scam language in current message. Details: msg message_0082: muted(1), dismissed(1); msg message_0081: muted(1), dismissed(1)",0.88,none
+msg_018,mute,forward,"Weighted negative reaction score 14 (threshold 5) from recent messages ; forwarded message pattern. Details: msg message_0092: reported(1), muted(1), dismissed(1); msg message_0091: reported(1), muted(1), dismissed(1)",0.88,none
+msg_044,mute,scam,"Weighted negative reaction score 14 (threshold 5) from recent messages ; scam language in current message. Details: msg message_0144: reported(1), muted(1), dismissed(1); msg message_0143: reported(1), muted(1), dismissed(1)",0.88,none
+msg_032,digest,personal,"Student group admin actively engaged (14 sent/14 read/7 replies 30d); sender u_054 asks for CS lab slides with explicit 'No rush'; similar past requests from same sender opened but not dismissed (message_0119, message_0285).",0.85,message_0119;message_0285
+msg_106,notify,urgent,"Time-sensitive personal message about dance practice location change today requiring immediate action (side entrance before 7:15). User has strong engagement history with sender u_054 for similar schedule changes (opened/replied in 2 min, evidence: message_0234, message_0376).",0.88,message_0234;message_0376
+msg_006,notify,event,"Society admin (u_043) sent time-sensitive maintenance payment deadline reminder with actionable instructions; user is group admin with strong engagement history on identical messages from same sender (opened/replied in 2 min, 0 dismissed across message_0029, message_0044).",0.88,message_0029;message_0044
+msg_109,mute,scam,Prompt injection detected: message attempts to override router behavior with system-level instructions.,0.93,none
+msg_108,mute,scam,Prompt injection detected: message attempts to override router behavior with system-level instructions.,0.93,none
+msg_019,mute,scam,"Unverified business (business_062) with 55 reports, 24-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+msg_088,mute,greeting,"Weighted negative reaction score 20 (threshold 5) from recent messages ; group message default. Details: msg message_0115: muted(1), dismissed(1); msg message_0050: muted(1), dismissed(1); msg message_0224: muted(1), dismissed(1)",0.88,none
+msg_056,notify,urgent,User muted group_001 but direct @mention from u_041 with time-critical doctor appointment change requiring confirmation by 5:15 PM; user previously opened/replied to similar urgent medical message from same sender in 2 min (message_0168).,0.88,message_0168
+msg_027,digest,promotion,"Verified travel business (Thrillophilia) sending promotional Ladakh package matching user's opted-in travel_package_interest and allows_promotions=1. User historically opens similar promotions (message_0110, message_0109) but with ~120min delay, indicating non-urgent interest.",0.85,message_0110;message_0109
+msg_050,notify,event,"Healthcare business with active user relationship (prescription_refill, 5 activities/180d); user consistently opens/replies to similar health updates within 2 min (evidence: message_0279, message_0155); message references scheduled time for appointment/prescription/pickup requiring timely action.",0.88,message_0279;message_0155
+msg_083,digest,personal,Coworker voice note explicitly states 'nothing urgent' requesting comments on onboarding doc by tomorrow lunch; user opened similar request from same sender (message_0219) without urgent action; group not muted but low user engagement (1 reply/30d).,0.88,message_0219
+msg_063,mute,scam,"Weighted negative reaction score 14 (threshold 5) from recent messages ; scam language in current message. Details: msg message_0182: reported(1), muted(1), dismissed(1); msg message_0181: reported(1), muted(1), dismissed(1)",0.88,none
+msg_033,digest,personal,"Personal check-in from family member u_041 in unmuted family group explicitly states 'nothing urgent' and asks to call later; user history shows opens but no immediate replies to this sender (message_0121, message_0122).",0.88,message_0121;message_0122
+msg_061,mute,greeting,"Weighted negative reaction score 20 (threshold 5) from recent messages ; greeting content in message. Details: msg message_0194: muted(1), dismissed(1); msg message_0193: muted(1), dismissed(1); msg message_0042: muted(1), dismissed(1)",0.88,none
+msg_020,mute,scam,"Weighted negative reaction score 8 (threshold 5) from recent messages ; scam language in current message. Details: msg message_0095: muted(1), dismissed(1); msg message_0096: muted(1), dismissed(1)",0.88,none
+msg_017,mute,scam,"Weighted negative reaction score 14 (threshold 5) from recent messages ; scam language in current message. Details: msg message_0090: reported(1), muted(1), dismissed(1); msg message_0089: reported(1), muted(1), dismissed(1)",0.88,none
+msg_058,mute,forward,"Weighted negative reaction score 44 (threshold 5) from recent messages ; forwarded message pattern. Details: msg message_0078: muted(1), dismissed(1); msg message_0077: muted(1), dismissed(1); msg message_0172: muted(1), dismissed(1)",0.88,none
+msg_026,mute,scam,"Unverified business (business_036) with 47 reports, 23-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+msg_047,notify,urgent,"Society maintenance admin (u_043) sent same-day lift maintenance notice requiring immediate action (use service lift from 4 PM). User engaged with similar maintenance update from same sender (message_0150: opened, replied in 2 min). Group not muted, user has high read/reply rate in this group.",0.88,message_0150
+msg_046,mute,greeting,"Weighted negative reaction score 14 (threshold 5) from recent messages ; group message default. Details: msg message_0148: reported(1), muted(1), dismissed(1); msg message_0147: reported(1), muted(1), dismissed(1)",0.88,none
+msg_042,notify,urgent,"Society admin u_043 sent time-critical security alert requiring immediate action (move cars in 10 mins or towed). User actively engages with this admin's maintenance alerts (opened/replied to message_0140, message_0139 in 2 mins). Group not muted.",0.89,message_0140;message_0139
+msg_079,mute,scam,"Scam language detected (1 EN patterns, 5 HI patterns). Message uses urgency, OTP requests, or account blocking pressure.",0.88,none
+msg_098,notify,urgent,"Personal message from u_041 requesting immediate call for time-critical clinic appointment decision (wait for specialist vs move to tomorrow). User has strong engagement history with this sender's medical messages: opened 2/2, replied 2/2 within 2 minutes (evidence: message_0359, message_0226).",0.92,message_0359;message_0226
+msg_037,notify,urgent,"Society admin u_043 sent time-critical water tanker arrival update requiring immediate action (driver leaves in 10 mins). User u_011 is group admin with high engagement history: opened/replied to 2 prior messages from this sender in 2 mins avg (evidence: message_0001, message_0029). Group not muted.",0.9,message_0001;message_0029
+msg_007,digest,event,"Society admin (u_043) sent non-urgent potluck registration with deadline next Sunday; user opens admin updates but doesn't dismiss (evidence: message_0069, message_0070); group not muted; no immediate action required.",0.84,message_0069;message_0070
+msg_085,mute,scam,"Unverified business (business_033) with 38 reports, 20-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+msg_001,notify,urgent,"Society admin u_043 sent time-critical water supply update: tanker leaving in 20 mins, driver refusing to wait, immediate action needed to fill drinking water. User previously opened and replied to similar water supply messages from same sender (message_0057, message_0240). Group not muted.",0.9,message_0057;message_0240
+msg_021,notify,payment,"Society admin u_043 sent time-sensitive payment reminder due today before 5 PM; user is admin in group_002 (not muted) and has history of opening/replying to similar payment messages from this sender (evidence: message_0068, message_0098). Warning against unofficial payment links adds legitimacy.",0.88,message_0068;message_0098
+msg_028,mute,promotion,User opted out of promotions from business_092 on 2026-07-17 23:55.,0.9,none
+msg_012,mute,forward,"Weighted negative reaction score 12 (threshold 5) from recent messages ; forwarded message pattern. Details: msg message_0247: muted(1), dismissed(1); msg message_0080: muted(1), dismissed(1); msg message_0079: muted(1), dismissed(1)",0.88,none
+msg_064,mute,greeting,"Weighted negative reaction score 49 (threshold 5) from recent messages ; group message default. Details: msg message_0087: reported(1), muted(1), dismissed(1); msg message_0184: reported(1), muted(1), dismissed(1); msg message_0088: reported(1), muted(1), dismissed(1)",0.88,none
+msg_103,notify,urgent,Direct 1:1 message with same-day 6 PM deadline to collect jacket; sender u_048 has history of similar denim jacket messages user engaged with (replied in 2 min to message_0065).,0.88,message_0065
+msg_031,notify,urgent,"User is admin in active coworker group; sender u_046 has history of work coordination messages user opens and replies to (message_0249, message_0117); message explicitly requires action tonight to avoid morning issues; image shows incident review screenshot relevant to requested summary.",0.88,message_0249;message_0117
+msg_057,notify,urgent,"Direct @mention from u_046 in active coworker group about build failure blocking client thread; user historically opens/replies within 2 min to similar urgent technical requests from same sender (evidence: message_0059, message_0169).",0.88,message_0059;message_0169
+msg_087,mute,greeting,"Weighted negative reaction score 22 (threshold 5) from recent messages ; group message default. Details: msg message_0204: reported(1), muted(1), dismissed(1); msg message_0203: reported(1), muted(1), dismissed(1); msg message_0223: muted(1), dismissed(1)",0.88,none
+msg_067,notify,payment,"User is admin of society group (group_muted_by_user=0); time-sensitive maintenance payment due today 5 PM with late fee warning from admin sender u_043; user history shows opened/replied to similar payment messages (evidence: message_0068, message_0098).",0.88,message_0068;message_0098
+msg_039,notify,urgent,"Direct @mention to u_006 (admin) from school admin u_045 demanding fee receipt today before field-trip list closes; user engages rapidly with similar school admin messages (message_0051, message_0403 opened/replied in 2 min).",0.9,message_0051;message_0403
+msg_082,notify,urgent,"Voice note from u_046 in coworker group alerts checkout errors spiking, payments failing, requests immediate incident bridge join. User historically opened/replied to identical alert from same sender in 2 mins (message_0218). Group not muted.",0.92,message_0218
+msg_066,mute,promotion,User opted out of promotions from business_067 on 2026-07-17 23:55.,0.9,none
+msg_049,notify,business_update,"Verified Shopee sending time-critical return pickup today 2-5 PM matching user's recent_return_pickup relationship; user opened and replied to 2 similar return pickup messages (message_0153, message_0291) with 2-min reaction time.",0.88,message_0153;message_0291
+msg_015,mute,scam,"Scam language detected (2 EN patterns, 0 HI patterns). Message uses urgency, OTP requests, or account blocking pressure.",0.88,none
+msg_051,mute,promotion,User opted out of promotions from business_003 on 2026-07-17 23:55.,0.9,none
+msg_097,digest,personal,"Personal 1:1 message from u_041 explicitly states 'nothing urgent' and requests callback tomorrow morning; historical pattern shows user opens similar messages but replies after ~2 hours (message_0054, message_0225).",0.88,message_0054;message_0225
+msg_089,notify,urgent,Personal 1:1 message from pottery workshop contact about user's lost water bottle with same-day 7 PM deadline requiring immediate action to retrieve property.,0.85,none
+msg_053,digest,forward,"User is admin of investment group; sender u_054 has pattern of weekly market notes with research links (evidence: message_0161, message_0411) that user opens but doesn't dismiss; message explicitly states 'no intraday call, read after market' indicating non-urgent.",0.85,message_0161;message_0411
+msg_059,mute,greeting,"Weighted negative reaction score 8 (threshold 5) from recent messages ; group message default. Details: msg message_0173: muted(1), dismissed(1); msg message_0174: muted(1), dismissed(1)",0.88,none
+msg_024,mute,promotion,User opted out of promotions from business_003 on 2026-07-17 23:55.,0.9,none
+msg_072,mute,scam,"Classic phishing pattern: urgent OTP verification threat with suspicious domain (account-help.in), forwarded_count=2, similar scam messages in group_005 (evidence: message_0023, message_0045).",0.92,message_0023;message_0045
+msg_036,mute,scam,"Unverified business (business_097) with 20 reports, 34-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+msg_076,mute,scam,"Unverified business (business_064) with 61 reports, 26-day-old account, and domain mismatch. Likely impersonator.",0.95,none
+msg_055,notify,urgent,"Family member u_041 sent explicit urgent request ('need to decide in next ten minutes') in unmuted extended family group; user has high engagement history with this sender (opened/replied to message_0166, message_0165 in 2 min).",0.88,message_0166;message_0165
+msg_102,notify,urgent,"Personal message from u_046 about production rollback requiring immediate 30-min monitoring; user has strong engagement history with identical messages from this sender (opened/replied within 2 min, 0 dismissals; evidence: message_0371, message_0230).",0.92,message_0371;message_0230
+msg_080,notify,urgent,"Society security admin (u_043) sent time-critical gate closure notice requiring car removal within 10 mins; user is group admin, group not muted, and user historically opens/replies to similar gate repair messages from same sender in ~2 mins (evidence: message_0216, message_0190).",0.92,message_0216;message_0190
+msg_093,notify,business_update,"Verified FedEx business (domain match, 9.5yr account) sending delivery attempt update for today; user has high business engagement (41 opened, 32 replied in 30d).",0.85,none
+msg_034,mute,greeting,"Weighted negative reaction score 44 (threshold 5) from recent messages ; greeting content in message. Details: msg message_0078: muted(1), dismissed(1); msg message_0077: muted(1), dismissed(1); msg message_0172: muted(1), dismissed(1)",0.88,none
+msg_035,digest,promotion,"Verified business (RazorpayX, domain match, 4341-day account) sending promotional content about Global Payouts; user has business_payment_stack_interest, allows_promotions=1, and opened 2 similar promos previously (message_0281, message_0125) with 120-min reaction time, no dismissals.",0.83,message_0281;message_0125
+msg_101,digest,personal,"User in DND window (06:07 within 22:30-07:30); sender u_054 sent non-urgent personal check-in explicitly stating 'no need to reply'; history shows user opens similar messages but replies after ~2hrs (message_0268, message_0370) with no dismissals.",0.88,message_0268;message_0370
+msg_041,digest,unknown,Unable to determine routing with sufficient confidence. Defaulting to digest for manual review.,0.3,none
+msg_011,mute,greeting,"Weighted negative reaction score 44 (threshold 5) from recent messages ; greeting content in message. Details: msg message_0078: muted(1), dismissed(1); msg message_0077: muted(1), dismissed(1); msg message_0172: muted(1), dismissed(1)",0.88,none
+msg_110,mute,scam,Prompt injection detected: message attempts to override router behavior with system-level instructions.,0.93,none
+msg_095,mute,scam,Prompt injection detected: message attempts to override router behavior with system-level instructions.,0.93,none
+msg_074,mute,forward,"Weighted negative reaction score 22 (threshold 5) from recent messages ; forwarded message pattern. Details: msg message_0204: reported(1), muted(1), dismissed(1); msg message_0203: reported(1), muted(1), dismissed(1); msg message_0223: muted(1), dismissed(1)",0.88,none
+msg_073,mute,forward,"Weighted negative reaction score 49 (threshold 5) from recent messages ; forwarded message pattern. Details: msg message_0087: reported(1), muted(1), dismissed(1); msg message_0184: reported(1), muted(1), dismissed(1); msg message_0088: reported(1), muted(1), dismissed(1)",0.88,none
+msg_054,mute,greeting,"Weighted negative reaction score 14 (threshold 5) from recent messages ; group message default. Details: msg message_0164: reported(1), muted(1), dismissed(1); msg message_0163: reported(1), muted(1), dismissed(1)",0.88,none
+msg_068,digest,event,"Casual group planning message in book club; sender explicitly states 'no urgency' and will post poll later. User history shows 120-min reaction time to similar messages from same sender (message_0191, message_0192) with no dismissals. Group not muted.",0.88,message_0191;message_0192
+msg_100,notify,urgent,"Direct personal message from u_046 about payment worker retries crossing alert threshold with client escalation in 20 minutes. User has strong history of opening and replying within 2 minutes to similar urgent work messages from this sender (evidence: message_0362, message_0228).",0.92,message_0362;message_0228
+msg_062,notify,event,"Society admin (u_043) sent time-sensitive fire alarm test notice for tomorrow 9-11 AM; user is group admin, group not muted, and historical evidence shows user opened/replied to identical notice from same sender (message_0043). Image mismatch but text matches verified pattern.",0.88,message_0043
+msg_096,notify,urgent,Direct personal message from u_049 about found passport at building reception requiring retrieval before 18h today - time-critical personal document recovery with same-day deadline.,0.9,none
+msg_043,notify,urgent,"Society admin u_043 sent time-critical water tanker update requiring immediate collection before tanker leaves in 15 mins; user is admin in group_002 (not muted) with history of opening/replying to similar alerts from same sender within 2 mins (evidence: message_0001, message_0179).",0.92,message_0001;message_0179
+msg_077,notify,event,"School admin u_045 sent time-critical field trip circular for tomorrow with evening deadline (bus list closes tonight). User is group admin with history of opening/replying to similar consent-form messages within 2 minutes (evidence: message_0051, message_0037).",0.92,message_0051;message_0037
+msg_081,notify,event,School admin (u_045) sent same-day pickup gate change requiring immediate action by 3:40 PM; user previously opened and replied to similar gate change from same sender (message_0217).,0.88,message_0217
+msg_025,notify,business_update,Verified Amazon India sending time-sensitive delivery update matching user's recent_grocery_delivery relationship; user historically opens and replies to identical delivery messages within 2 minutes (evidence: message_0004).,0.92,message_0004
+msg_084,mute,promotion,User opted out of promotions from business_002 on 2026-07-17 23:55.,0.9,none
+msg_022,mute,greeting,"Weighted negative reaction score 8 (threshold 5) from recent messages ; group message default. Details: msg message_0100: muted(1), dismissed(1); msg message_0099: muted(1), dismissed(1)",0.88,none
