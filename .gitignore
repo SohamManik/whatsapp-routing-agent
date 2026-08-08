@@ -29,3 +29,10 @@ htmlcov/
 
 # Local development
 *.local
+
+# Database
+*.db
+*.sqlite3
+
+# Archives
+*.zip

@@ -111,7 +111,7 @@ def execute_tool_call(tool_name: str, arguments: Dict[str, Any]) -> Dict[str, An
         return {"error": str(e)}
 
 
-def run_agent_for_message(message_row: dict) -> RoutingDecision:
+def run_agent_for_message(message_row: dict, event_callback=None) -> RoutingDecision:
     """Run the multi-turn agent loop for a single message."""
     message_id = message_row["message_id"]
     user_id = message_row["user_id"]
@@ -135,6 +135,8 @@ def run_agent_for_message(message_row: dict) -> RoutingDecision:
 
     if gate_result:
         logger.info(f"Safety gate triggered for {message_id}: {gate_result.message_type}")
+        if event_callback:
+            event_callback("gate_triggered", {"gate": gate_result.message_type, "action": gate_result.action, "reason": gate_result.reason})
         return RoutingDecision(
             message_id=message_id,
             action=gate_result.action,
@@ -211,6 +213,8 @@ def run_agent_for_message(message_row: dict) -> RoutingDecision:
             func_args = json.loads(tool_call["function"]["arguments"])
 
             logger.info(f"Calling tool: {func_name} with {func_args}")
+            if event_callback:
+                event_callback("tool_call", {"tool": func_name, "args": func_args})
             result = execute_tool_call(func_name, func_args)
 
             # Add tool result to messages

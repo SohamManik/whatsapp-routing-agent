@@ -1,0 +1,17 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+RUN pip install sqlalchemy fastapi uvicorn websockets
+
+# Copy source code and dataset
+COPY code/ ./code/
+COPY dataset/ ./dataset/
+COPY .env .env
+
+EXPOSE 8000
+
+CMD ["uvicorn", "code.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
