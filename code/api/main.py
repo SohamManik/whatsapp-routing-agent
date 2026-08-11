@@ -55,6 +55,25 @@ async def webhook_whatsapp(payload: dict, db: Session = Depends(get_db)):
     Simulated webhook. Expects a row-like dict.
     Runs the agent in a background thread to not block FastAPI.
     """
+    existing_msg = db.query(models.Message).filter_by(message_id=payload.get("message_id")).first()
+    if not existing_msg:
+        db_msg = models.Message(
+            message_id=payload.get("message_id"),
+            user_id=payload.get("user_id"),
+            sender_user_id=payload.get("sender_user_id"),
+            group_id=payload.get("group_id"),
+            business_id=payload.get("business_id"),
+            message_text=payload.get("message_text"),
+            media_type=payload.get("media_type"),
+            media_id=payload.get("media_id"),
+            conversation_type=payload.get("conversation_type", "personal"),
+            forwarded_count=payload.get("forwarded_count", 0),
+            is_broadcast=payload.get("is_broadcast", 0),
+            created_at=payload.get("created_at")
+        )
+        db.add(db_msg)
+        db.commit()
+
     loop = asyncio.get_running_loop()
     
     def emit_event(event_type: str, data: dict):
