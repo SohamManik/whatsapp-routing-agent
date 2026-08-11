@@ -4,14 +4,49 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, Shield, Bot, Zap, MessageSquare } from 'lucide-react';
 
+interface Decision {
+  action: string;
+  message_type: string;
+  reason: string;
+  confidence: number;
+  evidence_message_ids: string;
+}
+
+interface Message {
+  message_id: string;
+  sender_user_id?: string;
+  created_at?: string;
+  message_text?: string;
+}
+
+interface MessageFeedItem {
+  message: Message;
+  decision?: Decision | null;
+}
+
+interface AgentLogEvent {
+  type: string;
+  data: {
+    tool?: string;
+    args?: any;
+    gate?: string;
+    action?: string;
+    reason?: string;
+    message_type?: string;
+  };
+}
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const WS_BASE_URL = API_BASE_URL.replace(/^http/, 'ws');
+
 export default function Feed() {
-  const [messages, setMessages] = useState<any[]>([]);
-  const [selectedMessage, setSelectedMessage] = useState<any | null>(null);
-  const [agentLogs, setAgentLogs] = useState<any[]>([]);
+  const [messages, setMessages] = useState<MessageFeedItem[]>([]);
+  const [selectedMessage, setSelectedMessage] = useState<MessageFeedItem | null>(null);
+  const [agentLogs, setAgentLogs] = useState<AgentLogEvent[]>([]);
 
   useEffect(() => {
     // Fetch initial messages
-    fetch('http://localhost:8000/api/messages')
+    fetch(`${API_BASE_URL}/api/messages`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -21,7 +56,7 @@ export default function Feed() {
       .catch(console.error);
 
     // Connect WebSocket
-    const ws = new WebSocket('ws://localhost:8000/ws/agent-stream');
+    const ws = new WebSocket(`${WS_BASE_URL}/ws/agent-stream`);
     ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
@@ -29,7 +64,7 @@ export default function Feed() {
         
         if (data.type === 'decision_finalized') {
            // Refresh messages to get the new decision
-           fetch('http://localhost:8000/api/messages')
+           fetch(`${API_BASE_URL}/api/messages`)
             .then(res => res.json())
             .then(d => {
               if (Array.isArray(d)) setMessages(d);
@@ -175,7 +210,7 @@ export default function Feed() {
                                 log.data.action === 'mute' ? 'bg-gray-700/50 text-gray-400 border border-gray-600/50' :
                                 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
                               }`}>
-                              {log.data.action.toUpperCase()}
+                              {log.data.action?.toUpperCase()}
                             </span>
                             <span className="px-4 py-1.5 bg-white/5 rounded border border-white/10 text-gray-300 font-medium tracking-wide">
                               {log.data.message_type}

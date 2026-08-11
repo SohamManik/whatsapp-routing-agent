@@ -16,7 +16,6 @@ app = FastAPI(title="WhatsApp Agent API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -56,12 +55,15 @@ async def webhook_whatsapp(payload: dict, db: Session = Depends(get_db)):
     Simulated webhook. Expects a row-like dict.
     Runs the agent in a background thread to not block FastAPI.
     """
+    loop = asyncio.get_running_loop()
+    
     def emit_event(event_type: str, data: dict):
         try:
-            loop = asyncio.get_running_loop()
-            loop.create_task(manager.broadcast({"type": event_type, "data": data}))
-        except RuntimeError:
-            # If no running loop in this thread, we can't easily broadcast directly.
+            asyncio.run_coroutine_threadsafe(
+                manager.broadcast({"type": event_type, "data": data}),
+                loop
+            )
+        except Exception:
             pass
 
     decision = await asyncio.to_thread(run_agent_for_message, payload, emit_event)
