@@ -99,3 +99,12 @@ class RoutingDecision(Base):
     reason = Column(String)
     confidence = Column(Float)
     evidence_message_ids = Column(String, nullable=True)
+
+class ReasoningTrace(Base):
+    __tablename__ = "reasoning_traces"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    message_id = Column(String, index=True)
+    step_order = Column(Integer)
+    step_type = Column(String)  # "gate_check", "tool_call", "tool_result", "llm_response", "decision"
+    data = Column(Text)  # JSON string of the step data
+    created_at = Column(String, nullable=True)

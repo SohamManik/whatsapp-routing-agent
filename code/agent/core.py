@@ -29,6 +29,37 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
+def _is_empty(val) -> bool:
+    """Check if a value is None, NaN, or empty string. Safe for both pandas and JSON data."""
+    if val is None:
+        return True
+    if isinstance(val, float) and pd.isna(val):
+        return True
+    if isinstance(val, str) and val.strip() == "":
+        return True
+    return False
+
+def _save_trace(message_id: str, step_order: int, step_type: str, data: dict):
+    """Persist a reasoning step to the database."""
+    try:
+        from code.db.database import SessionLocal
+        from code.db.models import ReasoningTrace
+        import json
+        from datetime import datetime
+        db = SessionLocal()
+        trace = ReasoningTrace(
+            message_id=message_id,
+            step_order=step_order,
+            step_type=step_type,
+            data=json.dumps(data),
+            created_at=datetime.now().isoformat()
+        )
+        db.add(trace)
+        db.commit()
+        db.close()
+    except Exception as e:
+        logger.error(f"Failed to save trace: {e}")
+
 # NVIDIA NIM API for Nemotron 3 Ultra
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
 NEMOTRON_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
@@ -113,6 +144,16 @@ def execute_tool_call(tool_name: str, arguments: Dict[str, Any]) -> Dict[str, An
 
 def run_agent_for_message(message_row: dict, event_callback=None) -> RoutingDecision:
     """Run the multi-turn agent loop for a single message."""
+    step_counter = [0]
+    original_callback = event_callback
+
+    def traced_callback(event_type: str, data: dict):
+        step_counter[0] += 1
+        _save_trace(message_row.get("message_id", ""), step_counter[0], event_type, data)
+        if original_callback:
+            original_callback(event_type, data)
+
+    event_callback = traced_callback
     message_id = message_row["message_id"]
     user_id = message_row["user_id"]
     message_text = message_row.get("message_text", "") or ""
@@ -124,12 +165,12 @@ def run_agent_for_message(message_row: dict, event_callback=None) -> RoutingDeci
 
     # Check safety gates first (pre-LLM)
     gate_result = run_all_safety_gates(
-        message_text=message_text if not pd.isna(message_text) else "",
+        message_text=message_text if not _is_empty(message_text) else "",
         user_id=user_id,
-        sender_user_id=sender_user_id if sender_user_id and not pd.isna(sender_user_id) else None,
-        group_id=group_id if group_id and not pd.isna(group_id) else None,
-        business_id=business_id if business_id and not pd.isna(business_id) else None,
-        forwarded_count=int(message_row.get("forwarded_count", 0)) if pd.notna(message_row.get("forwarded_count")) else 0,
+        sender_user_id=sender_user_id if sender_user_id and not _is_empty(sender_user_id) else None,
+        group_id=group_id if group_id and not _is_empty(group_id) else None,
+        business_id=business_id if business_id and not _is_empty(business_id) else None,
+        forwarded_count=int(message_row.get("forwarded_count", 0)) if not _is_empty(message_row.get("forwarded_count")) else 0,
         conversation_type=message_row.get("conversation_type", "") or "",
     )
 
@@ -296,7 +337,7 @@ def _smart_fallback(message_id: str, message_row: dict) -> RoutingDecision:
     group_id = message_row.get("group_id")
     business_id = message_row.get("business_id")
     conversation_type = message_row.get("conversation_type", "")
-    forwarded_count = int(message_row.get("forwarded_count", 0)) if pd.notna(message_row.get("forwarded_count")) else 0
+    forwarded_count = int(message_row.get("forwarded_count", 0)) if not _is_empty(message_row.get("forwarded_count")) else 0
     message_text = str(message_row.get("message_text", "")).lower()
     sender_user_id = message_row.get("sender_user_id", "")
     user_id = message_row.get("user_id", "")
@@ -304,14 +345,14 @@ def _smart_fallback(message_id: str, message_row: dict) -> RoutingDecision:
     # Get group mute status
     loader = get_loader()
     group_muted = 0
-    if pd.notna(group_id) and group_id:
+    if not _is_empty(group_id) and group_id:
         member = loader.get_group_member(group_id, message_row["user_id"])
         if member:
             group_muted = int(member.get("group_muted_by_user", 0))
 
     # Check business verification
     biz_unverified = False
-    if pd.notna(business_id) and business_id:
+    if not _is_empty(business_id) and business_id:
         biz = loader.get_business(business_id)
         if biz and int(biz.get("verified", 0)) == 0:
             biz_unverified = True
