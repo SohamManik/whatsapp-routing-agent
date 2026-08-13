@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getMessage, getTraces, MessageWithDecision, Decision, ReasoningTrace } from '@/lib/api';
+import { stripEmojis } from '@/lib/utils';
 import { ActionBadge } from '@/components/ActionBadge';
 import { TimelineStep } from '@/components/TimelineStep';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
@@ -96,7 +97,7 @@ export default function MessageDetail({ params }: { params: Promise<{ id: string
             
             <div className="p-4 bg-zinc-950 rounded-xl border border-zinc-800/50">
               <p className="text-zinc-200 whitespace-pre-wrap leading-relaxed">
-                {data.message_text || '[Media Message]'}
+                {data.message_text ? stripEmojis(data.message_text) : '[Media Message]'}
               </p>
             </div>
 

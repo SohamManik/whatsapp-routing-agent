@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { MessageWithDecision } from '@/lib/api';
+import { stripEmojis } from '@/lib/utils';
 import { ActionBadge } from './ActionBadge';
 import { MessageCircle, Shield } from 'lucide-react';
 
@@ -55,7 +55,7 @@ export function MessageCard({ message }: { message: MessageWithDecision }) {
           </div>
         </div>
         <p className="text-zinc-300 text-sm line-clamp-2 leading-relaxed">
-          {message.message_text || '[Media Message]'}
+          {message.message_text ? stripEmojis(message.message_text) : '[Media Message]'}
         </p>
         <div className="mt-4 flex items-center justify-between border-t border-zinc-800/50 pt-3">
            <div className="flex items-center text-xs text-zinc-500">

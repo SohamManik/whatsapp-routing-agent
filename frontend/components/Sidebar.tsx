@@ -42,12 +42,7 @@ export function Sidebar() {
           );
         })}
       </nav>
-      <div className="p-4 border-t border-zinc-800">
-        <div className="text-xs text-zinc-500 flex items-center justify-center space-x-1">
-          <span>Powered by</span>
-          <span className="font-medium text-zinc-400">Nemotron</span>
-        </div>
-      </div>
+
     </aside>
   );
 }
