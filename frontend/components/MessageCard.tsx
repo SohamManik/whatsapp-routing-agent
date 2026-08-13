@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { MessageWithDecision } from '@/lib/api';
 import { stripEmojis } from '@/lib/utils';
 import { ActionBadge } from './ActionBadge';
