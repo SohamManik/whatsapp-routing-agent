@@ -3,7 +3,9 @@ import json
 from typing import List, Optional
 from datetime import datetime
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Depends, Query, BackgroundTasks
+import os
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Depends, Query, BackgroundTasks, Request, Response
+from fastapi.responses import PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy import func
@@ -171,31 +173,98 @@ def process_message_background(payload: dict, loop: asyncio.AbstractEventLoop):
     except Exception as e:
         print(f"Error processing background message: {e}")
 
+@app.get("/webhook/whatsapp")
+async def verify_webhook(
+    hub_mode: str = Query(None, alias="hub.mode"),
+    hub_challenge: str = Query(None, alias="hub.challenge"),
+    hub_verify_token: str = Query(None, alias="hub.verify_token")
+):
+    """Meta Webhook Verification Endpoint"""
+    verify_token = os.getenv("META_VERIFY_TOKEN", "my_secret_token_123")
+    
+    if hub_mode == "subscribe" and hub_verify_token == verify_token:
+        print("Webhook verified successfully!")
+        return PlainTextResponse(content=hub_challenge, status_code=200)
+    return Response(status_code=403)
+
 @app.post("/webhook/whatsapp")
 async def webhook_whatsapp(payload: dict, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
-    existing_msg = db.query(models.Message).filter_by(message_id=payload.get("message_id")).first()
+    # 1. Determine if this is a Meta payload or our internal test payload
+    is_meta_payload = payload.get("object") == "whatsapp_business_account"
+    
+    if is_meta_payload:
+        # Parse Meta's deeply nested payload
+        try:
+            entry = payload["entry"][0]
+            changes = entry["changes"][0]["value"]
+            
+            # Sometimes Meta sends status updates (read/delivered) instead of messages
+            if "messages" not in changes:
+                return {"status": "ignored"}
+                
+            msg_data = changes["messages"][0]
+            contact_data = changes.get("contacts", [{}])[0]
+            
+            message_id = msg_data.get("id")
+            sender_phone = msg_data.get("from")
+            
+            # Extract text if available
+            message_text = ""
+            if msg_data.get("type") == "text":
+                message_text = msg_data["text"]["body"]
+                
+            # If the user has a profile name, we can prepend it or store it, 
+            # but for our LLM, we just pass the text.
+            
+            # Convert timestamp
+            timestamp_int = int(msg_data.get("timestamp", 0))
+            created_at = datetime.utcfromtimestamp(timestamp_int).isoformat() + "Z" if timestamp_int else datetime.utcnow().isoformat()
+            
+            # Build mapped payload for our agent
+            internal_payload = {
+                "message_id": message_id,
+                "user_id": "u_001",  # Hardcoded to our demo user
+                "sender_user_id": sender_phone,
+                "group_id": None,
+                "business_id": None,
+                "message_text": message_text,
+                "media_type": None,
+                "media_id": None,
+                "conversation_type": "personal",
+                "forwarded_count": 0,
+                "is_broadcast": 0,
+                "created_at": created_at
+            }
+        except (KeyError, IndexError) as e:
+            print(f"Failed to parse Meta payload: {e}")
+            return Response(status_code=400)
+    else:
+        # Fallback to our internal test schema (for the Live Monitor "Send Test Message" feature)
+        internal_payload = payload
+
+    existing_msg = db.query(models.Message).filter_by(message_id=internal_payload.get("message_id")).first()
     if not existing_msg:
         db_msg = models.Message(
-            message_id=payload.get("message_id"),
-            user_id=payload.get("user_id"),
-            sender_user_id=payload.get("sender_user_id"),
-            group_id=payload.get("group_id"),
-            business_id=payload.get("business_id"),
-            message_text=payload.get("message_text"),
-            media_type=payload.get("media_type"),
-            media_id=payload.get("media_id"),
-            conversation_type=payload.get("conversation_type", "personal"),
-            forwarded_count=payload.get("forwarded_count", 0),
-            is_broadcast=payload.get("is_broadcast", 0),
-            created_at=payload.get("created_at") or datetime.utcnow().isoformat()
+            message_id=internal_payload.get("message_id"),
+            user_id=internal_payload.get("user_id"),
+            sender_user_id=internal_payload.get("sender_user_id"),
+            group_id=internal_payload.get("group_id"),
+            business_id=internal_payload.get("business_id"),
+            message_text=internal_payload.get("message_text"),
+            media_type=internal_payload.get("media_type"),
+            media_id=internal_payload.get("media_id"),
+            conversation_type=internal_payload.get("conversation_type", "personal"),
+            forwarded_count=internal_payload.get("forwarded_count", 0),
+            is_broadcast=internal_payload.get("is_broadcast", 0),
+            created_at=internal_payload.get("created_at") or datetime.utcnow().isoformat()
         )
         db.add(db_msg)
         db.commit()
 
     loop = asyncio.get_running_loop()
-    background_tasks.add_task(process_message_background, payload, loop)
+    background_tasks.add_task(process_message_background, internal_payload, loop)
     
-    return {"status": "processing", "message_id": payload.get("message_id")}
+    return {"status": "processing", "message_id": internal_payload.get("message_id")}
 
 @app.get("/api/digest/summary")
 def get_digest_summary(db: Session = Depends(get_db)):
