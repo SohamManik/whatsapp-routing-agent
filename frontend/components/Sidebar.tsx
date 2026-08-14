@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, MessageSquare, Activity, Cpu } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, Activity, Cpu, Sparkles } from 'lucide-react';
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -11,6 +11,7 @@ export function Sidebar() {
     { href: '/', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/messages', label: 'Messages', icon: MessageSquare },
     { href: '/monitor', label: 'Live Monitor', icon: Activity },
+    { href: '/digest', label: 'Digest Summary', icon: Sparkles },
   ];
 
   return (

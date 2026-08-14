@@ -201,7 +201,7 @@ def run_agent_for_message(message_row: dict, event_callback=None) -> RoutingDeci
     ]
 
     # Multi-turn tool calling loop
-    max_turns = 8
+    max_turns = 4
     for turn in range(max_turns):
         logger.info(f"Message {message_id}: Turn {turn + 1}")
 
@@ -228,7 +228,7 @@ def run_agent_for_message(message_row: dict, event_callback=None) -> RoutingDeci
             content = message.get("content", "")
             try:
                 decision_data = json.loads(content)
-                return _validate_with_retry(decision_data, message_id, message_row, messages, max_retries=3)
+                return _validate_with_retry(decision_data, message_id, message_row, messages, max_retries=1)
             except json.JSONDecodeError:
                 # Try to extract JSON from content
                 try:
@@ -236,7 +236,7 @@ def run_agent_for_message(message_row: dict, event_callback=None) -> RoutingDeci
                     end = content.rfind("}") + 1
                     if start >= 0 and end > start:
                         decision_data = json.loads(content[start:end])
-                        return _validate_with_retry(decision_data, message_id, message_row, messages, max_retries=3)
+                        return _validate_with_retry(decision_data, message_id, message_row, messages, max_retries=1)
                 except Exception:
                     pass
                 # If we can't parse, continue the loop to let the model try again
@@ -272,7 +272,7 @@ def run_agent_for_message(message_row: dict, event_callback=None) -> RoutingDeci
         final_response = call_nemotron(messages + [{"role": "user", "content": "Output ONLY the final RoutingDecision JSON now."}], tools=None)
         final_content = final_response["choices"][0]["message"]["content"]
         decision_data = json.loads(final_content)
-        return _validate_with_retry(decision_data, message_id, message_row, messages, max_retries=3)
+        return _validate_with_retry(decision_data, message_id, message_row, messages, max_retries=1)
     except Exception as e:
         logger.error(f"Final attempt failed for {message_id}: {e}")
         # Use smart fallback but still apply post-LLM evaluation
@@ -287,7 +287,7 @@ def _validate_with_retry(
     message_id: str,
     message_row: dict,
     messages: list,
-    max_retries: int = 3
+    max_retries: int = 1
 ) -> RoutingDecision:
     """Validate decision with Pydantic, retry on failure by feeding error back to LLM."""
     # Remove message_id from decision_data if present (will be passed as kwarg)
