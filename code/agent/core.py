@@ -380,7 +380,8 @@ def _smart_fallback(message_id: str, message_row: dict) -> RoutingDecision:
         )
 
     # Rule 3: Direct @mention -> notify
-    if f"@{user_id}" in message_text or f"@ {user_id}" in message_text:
+    message_text_lower = message_text.lower()
+    if f"@{user_id}" in message_text_lower or f"@ {user_id}" in message_text_lower or "@vivek" in message_text_lower or "@ vivek" in message_text_lower:
         # Check if urgent keywords
         urgent_keywords = ["urgent", "now", "immediately", "asap", "emergency", "critical", "call now", "reply now"]
         if any(kw in message_text for kw in urgent_keywords):

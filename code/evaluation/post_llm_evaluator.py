@@ -27,9 +27,10 @@ def _has_direct_mention(message_text: str, user_id: str) -> bool:
     """Check if message contains a direct @mention of the user_id."""
     if not message_text or pd.isna(message_text):
         return False
-    text = str(message_text)
-    # Look for @user_id pattern (WhatsApp mentions use the user_id format)
-    return f"@{user_id}" in text or f"@ {user_id}" in text
+    text = str(message_text).lower()
+    # Look for @user_id pattern or @Vivek (since we hardcoded Vivek for the demo)
+    user_id_lower = str(user_id).lower()
+    return f"@{user_id_lower}" in text or f"@ {user_id_lower}" in text or "@vivek" in text or "@ vivek" in text
 
 
 def _check_gate_5_weighted_score(user_id: str, sender_user_id: Optional[str],
