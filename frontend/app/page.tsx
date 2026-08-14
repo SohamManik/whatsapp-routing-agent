@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { getStats, getMessages, Stats, MessageWithDecision } from '@/lib/api';
+import { getStats, getMessages, getDigestSummary, Stats, MessageWithDecision } from '@/lib/api';
 import { StatCard } from '@/components/StatCard';
 import { MessageCard } from '@/components/MessageCard';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
-import { Inbox, BellRing, BookOpen, VolumeX, AlertCircle } from 'lucide-react';
+import { Inbox, BellRing, BookOpen, VolumeX, AlertCircle, X, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function DashboardPage() {
@@ -13,6 +13,23 @@ export default function DashboardPage() {
   const [recent, setRecent] = useState<MessageWithDecision[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  const [showDigestModal, setShowDigestModal] = useState(false);
+  const [digestSummary, setDigestSummary] = useState<string | null>(null);
+  const [loadingDigest, setLoadingDigest] = useState(false);
+
+  const fetchDigest = async () => {
+    setShowDigestModal(true);
+    setLoadingDigest(true);
+    try {
+      const res = await getDigestSummary();
+      setDigestSummary(res.summary);
+    } catch {
+      setDigestSummary("Failed to load summary. Try again later.");
+    } finally {
+      setLoadingDigest(false);
+    }
+  };
 
   useEffect(() => {
     async function loadData() {
@@ -62,7 +79,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard label="Total Processed" value={stats?.total || 0} icon={Inbox} colorClass="text-zinc-200" delay={0} />
           <StatCard label="Notified" value={stats?.notify_count || 0} icon={BellRing} colorClass="text-red-500" delay={0.1} />
-          <StatCard label="Digested" value={stats?.digest_count || 0} icon={BookOpen} colorClass="text-blue-500" delay={0.2} />
+          <StatCard label="Digested" value={stats?.digest_count || 0} icon={BookOpen} colorClass="text-blue-500" delay={0.2} onClick={fetchDigest} />
           <StatCard label="Muted" value={stats?.mute_count || 0} icon={VolumeX} colorClass="text-zinc-500" delay={0.3} />
         </div>
       )}
@@ -111,6 +128,38 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+
+      {showDigestModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-zinc-900 border border-zinc-800 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl"
+          >
+            <div className="flex items-center justify-between p-5 border-b border-zinc-800 bg-zinc-900/50">
+              <h2 className="text-lg font-semibold text-zinc-100 flex items-center">
+                <Sparkles className="w-5 h-5 text-blue-400 mr-2" />
+                Digest Summary
+              </h2>
+              <button onClick={() => setShowDigestModal(false)} className="text-zinc-400 hover:text-zinc-200 transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-6 min-h-[150px]">
+              {loadingDigest ? (
+                <div className="flex flex-col items-center justify-center h-full text-zinc-500 space-y-3">
+                  <div className="w-6 h-6 border-2 border-zinc-600 border-t-blue-500 rounded-full animate-spin" />
+                  <p className="text-sm">AI is summarizing your digested messages...</p>
+                </div>
+              ) : (
+                <div className="text-zinc-300 text-sm leading-relaxed whitespace-pre-wrap">
+                  {digestSummary}
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }

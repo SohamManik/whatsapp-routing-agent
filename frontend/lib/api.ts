@@ -115,3 +115,9 @@ export async function sendTestMessage(text: string): Promise<{ status: string; m
   if (!res.ok) throw new Error('Failed to send test message');
   return res.json();
 }
+
+export async function getDigestSummary(): Promise<{ summary: string }> {
+  const res = await fetch(`${API_BASE}/api/digest/summary`, { cache: 'no-store' });
+  if (!res.ok) throw new Error('Failed to fetch digest summary');
+  return res.json();
+}

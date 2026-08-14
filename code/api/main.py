@@ -138,8 +138,18 @@ def process_message_background(payload: dict, loop: asyncio.AbstractEventLoop):
             pass
 
     try:
-        decision = run_agent_for_message(payload, emit_event)
-        
+        try:
+            decision = run_agent_for_message(payload, emit_event)
+        except Exception as e:
+            import logging
+            logging.error(f"Agent failed entirely for {payload.get('message_id')}: {e}")
+            from code.agent.schemas import RoutingDecision, SAFE_FALLBACK
+            decision = RoutingDecision(
+                message_id=payload.get("message_id", "unknown"),
+                **SAFE_FALLBACK
+            )
+            decision.reason = "System timeout or unexpected error. Fallback applied."
+            
         db = next(get_db())
         try:
             db_decision = models.RoutingDecision(
@@ -186,3 +196,27 @@ async def webhook_whatsapp(payload: dict, background_tasks: BackgroundTasks, db:
     background_tasks.add_task(process_message_background, payload, loop)
     
     return {"status": "processing", "message_id": payload.get("message_id")}
+
+@app.get("/api/digest/summary")
+def get_digest_summary(db: Session = Depends(get_db)):
+    from code.agent.core import call_nemotron
+    
+    decisions = db.query(models.RoutingDecision).filter(models.RoutingDecision.action == "digest").order_by(models.RoutingDecision.id.desc()).limit(15).all()
+    if not decisions:
+        return {"summary": "No digested messages found recently."}
+        
+    msg_ids = [d.message_id for d in decisions]
+    messages = db.query(models.Message).filter(models.Message.message_id.in_(msg_ids)).all()
+    texts = [f"From {m.sender_user_id or m.group_id or m.business_id}: {m.message_text}" for m in messages if m.message_text]
+    
+    if not texts:
+        return {"summary": "No text messages found in recent digests."}
+        
+    prompt = "You are a helpful assistant. Summarize these low-priority WhatsApp messages into a short, cohesive summary (max 3 bullet points) for the user to read at the end of the day:\n\n" + "\n".join(texts)
+    
+    try:
+        res = call_nemotron([{"role": "user", "content": prompt}])
+        content = res["choices"][0]["message"]["content"]
+        return {"summary": content}
+    except Exception as e:
+        return {"summary": f"Could not generate summary at this time (Error: {e})"}
