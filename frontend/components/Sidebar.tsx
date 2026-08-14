@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, MessageSquare, Activity, Bot } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, Activity, Cpu } from 'lucide-react';
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -16,7 +16,7 @@ export function Sidebar() {
   return (
     <aside className="w-64 bg-zinc-950 border-r border-zinc-800 flex flex-col h-screen shrink-0 hidden md:flex">
       <div className="h-16 flex items-center px-6 border-b border-zinc-800">
-        <Bot className="w-6 h-6 text-violet-500 mr-3" />
+        <Cpu className="w-6 h-6 text-violet-500 mr-3" />
         <span className="font-semibold text-zinc-100 tracking-tight">Agentic Router</span>
       </div>
       <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">

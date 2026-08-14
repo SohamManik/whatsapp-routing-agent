@@ -11,6 +11,17 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { use } from 'react';
 
+function formatTimeAgo(timestamp?: string) {
+  if (!timestamp) return '';
+  try {
+    const utcTimestamp = timestamp.endsWith('Z') ? timestamp : `${timestamp}Z`;
+    const date = new Date(utcTimestamp);
+    return date.toLocaleString();
+  } catch {
+    return timestamp;
+  }
+}
+
 export default function MessageDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const [data, setData] = useState<(MessageWithDecision & { sender_info?: Record<string, unknown> }) | null>(null);
@@ -62,6 +73,12 @@ export default function MessageDetail({ params }: { params: Promise<{ id: string
   const decision = data.decision;
   const confidencePct = decision ? Math.round(decision.confidence * 100) : 0;
   const senderId = data.sender_user_id || data.business_id || data.user_id || 'Unknown';
+  
+  const displayName = data.sender_info?.name as string || (senderId.startsWith('u_') ? `User ${senderId.replace('u_', '')}` : senderId);
+  const init = displayName.slice(0, 2).toUpperCase();
+  const colors = ['bg-rose-500/20 text-rose-400', 'bg-blue-500/20 text-blue-400', 'bg-emerald-500/20 text-emerald-400', 'bg-amber-500/20 text-amber-400', 'bg-violet-500/20 text-violet-400'];
+  const colorIndex = senderId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % colors.length;
+  const avatarClass = colors[colorIndex];
 
   return (
     <div className="p-6 md:p-10 max-w-4xl mx-auto space-y-8">
@@ -76,9 +93,11 @@ export default function MessageDetail({ params }: { params: Promise<{ id: string
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center space-x-3 text-sm text-zinc-400">
-                <div className="flex items-center">
-                  <User className="w-4 h-4 mr-1.5" />
-                  <span className="text-zinc-200">{senderId}</span>
+                <div className="flex items-center space-x-2">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-zinc-700/50 ${avatarClass}`}>
+                    <span className="font-medium text-xs">{init}</span>
+                  </div>
+                  <span className="text-zinc-200 font-medium">{displayName}</span>
                 </div>
                 {data.group_id && (
                   <div className="flex items-center">
@@ -90,7 +109,7 @@ export default function MessageDetail({ params }: { params: Promise<{ id: string
               {data.created_at && (
                 <div className="flex items-center text-xs text-zinc-500">
                   <Calendar className="w-3.5 h-3.5 mr-1.5" />
-                  {data.created_at}
+                  {formatTimeAgo(data.created_at)}
                 </div>
               )}
             </div>
@@ -171,8 +190,9 @@ export default function MessageDetail({ params }: { params: Promise<{ id: string
                 </div>
               </div>
             ) : (
-              <div className="text-sm text-zinc-500 italic">
-                Decision pending or not available.
+              <div className="flex flex-col items-center justify-center py-8 text-sm text-zinc-500 border border-zinc-800 border-dashed rounded-xl bg-zinc-900/30">
+                <div className="w-6 h-6 border-2 border-zinc-600 border-t-violet-500 rounded-full animate-spin mb-3" />
+                Processing...
               </div>
             )}
           </div>

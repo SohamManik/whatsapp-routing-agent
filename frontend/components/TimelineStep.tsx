@@ -41,15 +41,43 @@ export function TimelineStep({ trace, index }: { trace: ReasoningTrace; index: n
 
   const getContent = () => {
     if (trace.step_type === 'gate_triggered') {
-      return `Action: ${parsedData.action || 'N/A'}\nReason: ${parsedData.reason || 'N/A'}`;
+      return (
+        <div className="space-y-1">
+          <div className="flex text-zinc-300"><span className="w-24 text-zinc-500">Action:</span> <span className="font-medium text-blue-400 capitalize">{String(parsedData.action || 'N/A')}</span></div>
+          <div className="flex text-zinc-300"><span className="w-24 text-zinc-500">Reason:</span> <span>{String(parsedData.reason || 'N/A')}</span></div>
+        </div>
+      );
     }
     if (trace.step_type === 'tool_call') {
-      return `Arguments: ${JSON.stringify(parsedData.args || {}, null, 2)}`;
+      const args = parsedData.args as Record<string, unknown>;
+      return (
+        <div className="space-y-1">
+          <div className="text-zinc-500 mb-1">Arguments:</div>
+          {Object.entries(args || {}).map(([key, val]) => (
+            <div key={key} className="flex pl-2 border-l border-zinc-700/50">
+              <span className="text-zinc-400 mr-2">{key}:</span>
+              <span className="text-amber-400/90 break-all">{String(val)}</span>
+            </div>
+          ))}
+        </div>
+      );
     }
     if (trace.step_type === 'decision_finalized') {
-      return `Type: ${parsedData.message_type || 'N/A'}\nReason: ${parsedData.reason || 'N/A'}\nConfidence: ${parsedData.confidence || 'N/A'}`;
+      return (
+        <div className="space-y-1">
+          <div className="flex text-zinc-300"><span className="w-24 text-zinc-500">Type:</span> <span className="capitalize">{String(parsedData.message_type || 'N/A').replace('_', ' ')}</span></div>
+          <div className="flex text-zinc-300"><span className="w-24 text-zinc-500">Confidence:</span> <span className="text-emerald-400 font-medium">{Math.round(Number(parsedData.confidence || 0) * 100)}%</span></div>
+          <div className="flex text-zinc-300 mt-2"><span className="w-24 text-zinc-500">Reasoning:</span> <span className="italic">"{String(parsedData.reason || 'N/A')}"</span></div>
+        </div>
+      );
     }
-    return JSON.stringify(parsedData, null, 2);
+    
+    // Fallback for LLM reasoning text
+    if (typeof trace.data === 'string' && trace.data.trim().length > 0 && trace.data[0] !== '{') {
+      return <div className="text-zinc-300 leading-relaxed">{trace.data}</div>;
+    }
+    
+    return <div className="text-zinc-500 italic">Processing completed.</div>;
   };
 
   return (
@@ -72,9 +100,9 @@ export function TimelineStep({ trace, index }: { trace: ReasoningTrace; index: n
             </span>
           )}
         </div>
-        <pre className="text-zinc-400 text-sm whitespace-pre-wrap font-mono leading-relaxed">
+        <div className="text-sm">
           {getContent()}
-        </pre>
+        </div>
       </div>
     </motion.div>
   );

@@ -83,7 +83,7 @@ export default function MonitorPage() {
               {connected ? 'Live' : 'Disconnected'}
             </div>
           </h1>
-          <p className="text-sm text-zinc-500 mt-1">Real-time WebSocket stream of reasoning traces</p>
+          <p className="text-sm text-zinc-500 mt-1">Watch the AI process incoming messages live</p>
         </div>
 
         <div className="flex items-center space-x-2 bg-zinc-900 p-1.5 rounded-lg border border-zinc-800 w-full sm:w-auto">

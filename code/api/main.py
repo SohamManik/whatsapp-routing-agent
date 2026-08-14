@@ -126,17 +126,14 @@ def get_message_traces(message_id: str, db: Session = Depends(get_db)):
     traces = db.query(models.ReasoningTrace).filter(models.ReasoningTrace.message_id == message_id).order_by(models.ReasoningTrace.step_order.asc()).all()
     return [{k: v for k, v in t.__dict__.items() if not k.startswith('_')} for t in traces]
 
-def process_message_background(payload: dict):
-    # This loop is just for emitting events
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    
+def process_message_background(payload: dict, loop: asyncio.AbstractEventLoop):
     def emit_event(event_type: str, data: dict):
         try:
-            asyncio.run_coroutine_threadsafe(
-                manager.broadcast({"type": event_type, "data": data}),
-                loop
-            )
+            if not loop.is_closed():
+                asyncio.run_coroutine_threadsafe(
+                    manager.broadcast({"type": event_type, "data": data}),
+                    loop
+                )
         except Exception:
             pass
 
@@ -161,8 +158,8 @@ def process_message_background(payload: dict):
             emit_event("decision_finalized", decision.model_dump() if hasattr(decision, "model_dump") else decision.dict())
         finally:
             db.close()
-    finally:
-        loop.close()
+    except Exception as e:
+        print(f"Error processing background message: {e}")
 
 @app.post("/webhook/whatsapp")
 async def webhook_whatsapp(payload: dict, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
@@ -180,11 +177,12 @@ async def webhook_whatsapp(payload: dict, background_tasks: BackgroundTasks, db:
             conversation_type=payload.get("conversation_type", "personal"),
             forwarded_count=payload.get("forwarded_count", 0),
             is_broadcast=payload.get("is_broadcast", 0),
-            created_at=payload.get("created_at") or datetime.now().isoformat()
+            created_at=payload.get("created_at") or datetime.utcnow().isoformat()
         )
         db.add(db_msg)
         db.commit()
 
-    background_tasks.add_task(process_message_background, payload)
+    loop = asyncio.get_running_loop()
+    background_tasks.add_task(process_message_background, payload, loop)
     
     return {"status": "processing", "message_id": payload.get("message_id")}
