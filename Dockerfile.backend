@@ -10,7 +10,6 @@ RUN pip install sqlalchemy fastapi uvicorn websockets
 # Copy source code and dataset
 COPY code/ ./code/
 COPY dataset/ ./dataset/
-COPY .env .env
 
 EXPOSE 8000
 
