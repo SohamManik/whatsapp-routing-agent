@@ -60,9 +60,9 @@ def _save_trace(message_id: str, step_order: int, step_type: str, data: dict):
     except Exception as e:
         logger.error(f"Failed to save trace: {e}")
 
-# NVIDIA NIM API for Nemotron 3 Ultra
+# NVIDIA NIM API
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
-NEMOTRON_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
+NEMOTRON_MODEL = "meta/llama-3.1-70b-instruct"
 NEMOTRON_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 
 # Tool function mapping
