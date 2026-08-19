@@ -30,6 +30,8 @@ export default function MessageDetail({ params }: { params: Promise<{ id: string
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let ws: WebSocket;
+    
     async function load() {
       try {
         const [msgData, traceData] = await Promise.all([
@@ -45,6 +47,54 @@ export default function MessageDetail({ params }: { params: Promise<{ id: string
       }
     }
     load();
+
+    // WebSocket for real-time updates
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const wsBase = API_URL.replace('http', 'ws');
+    
+    function connect() {
+      ws = new WebSocket(`${wsBase}/ws/agent-stream`);
+      
+      ws.onmessage = (event) => {
+        try {
+          const ev = JSON.parse(event.data);
+          
+          if (ev.data && ev.data.message_id === id) {
+            if (ev.type === 'decision_finalized') {
+              setData(prev => prev ? { ...prev, decision: ev.data } : prev);
+            } else {
+              setTraces(prev => {
+                const newTrace: ReasoningTrace = {
+                  id: Date.now(),
+                  message_id: id,
+                  step_order: prev.length + 1,
+                  step_type: ev.type,
+                  data: ev.data,
+                  created_at: new Date().toISOString()
+                };
+                return [...prev, newTrace];
+              });
+            }
+          }
+        } catch (e) {}
+      };
+      
+      ws.onclose = () => {
+        setTimeout(connect, 3000);
+      };
+    }
+    connect();
+
+    const pingInterval = setInterval(() => {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: "ping" }));
+      }
+    }, 30000);
+
+    return () => {
+      clearInterval(pingInterval);
+      if (ws) ws.close();
+    };
   }, [id]);
 
   if (error) {

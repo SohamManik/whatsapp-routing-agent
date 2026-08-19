@@ -209,7 +209,7 @@ FEW_SHOT_EXAMPLES = [
 def build_user_prompt(message_row: dict) -> str:
     """Build the user prompt for a specific message from a dict row."""
     parts = [
-        f"User's Profile Name: Vivek",
+        f"User's Profile Name: Soham",
         f"Message ID: {message_row.get('message_id', '')}",
         f"User: {message_row.get('user_id', '')}",
         f"Conversation Type: {message_row.get('conversation_type', '')}",

@@ -177,7 +177,7 @@ def run_agent_for_message(message_row: dict, event_callback=None) -> RoutingDeci
     if gate_result:
         logger.info(f"Safety gate triggered for {message_id}: {gate_result.message_type}")
         if event_callback:
-            event_callback("gate_triggered", {"gate": gate_result.message_type, "action": gate_result.action, "reason": gate_result.reason})
+            event_callback("gate_triggered", {"message_id": message_id, "gate": gate_result.message_type, "action": gate_result.action, "reason": gate_result.reason})
         return RoutingDecision(
             message_id=message_id,
             action=gate_result.action,
@@ -255,7 +255,7 @@ def run_agent_for_message(message_row: dict, event_callback=None) -> RoutingDeci
 
             logger.info(f"Calling tool: {func_name} with {func_args}")
             if event_callback:
-                event_callback("tool_call", {"tool": func_name, "args": func_args})
+                event_callback("tool_call", {"message_id": message_id, "tool": func_name, "args": func_args})
             result = execute_tool_call(func_name, func_args)
 
             # Add tool result to messages
@@ -381,7 +381,7 @@ def _smart_fallback(message_id: str, message_row: dict) -> RoutingDecision:
 
     # Rule 3: Direct @mention -> notify
     message_text_lower = message_text.lower()
-    if f"@{user_id}" in message_text_lower or f"@ {user_id}" in message_text_lower or "@vivek" in message_text_lower or "@ vivek" in message_text_lower:
+    if f"@{user_id}" in message_text_lower or f"@ {user_id}" in message_text_lower or "@soham" in message_text_lower or "@ soham" in message_text_lower:
         # Check if urgent keywords
         urgent_keywords = ["urgent", "now", "immediately", "asap", "emergency", "critical", "call now", "reply now"]
         if any(kw in message_text for kw in urgent_keywords):
