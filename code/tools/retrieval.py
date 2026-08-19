@@ -25,14 +25,8 @@ _cross_encoder = None
 def _get_cross_encoder():
     """Load CrossEncoder model lazily and cache it."""
     global _cross_encoder
-    if _cross_encoder is None:
-        try:
-            from sentence_transformers import CrossEncoder
-            _cross_encoder = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
-            logger.info("Loaded CrossEncoder model: cross-encoder/ms-marco-MiniLM-L-6-v2")
-        except Exception as e:
-            logger.warning(f"Failed to load CrossEncoder, falling back to BM25 only: {e}")
-            _cross_encoder = False  # Mark as unavailable
+    # Disabled for Render Free Tier to prevent OOM crash
+    _cross_encoder = False
     return _cross_encoder
 
 
