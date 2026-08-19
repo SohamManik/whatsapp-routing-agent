@@ -208,14 +208,22 @@ async def webhook_whatsapp(payload: dict, background_tasks: BackgroundTasks, db:
             message_id = msg_data.get("id")
             sender_phone = msg_data.get("from")
             
-            # Extract text if available
+            # Extract text and media if available
             message_text = ""
+            media_type = None
+            media_id = None
+            
             if msg_data.get("type") == "text":
                 message_text = msg_data["text"]["body"]
+            elif msg_data.get("type") == "audio":
+                media_type = "audio"
+                media_id = msg_data["audio"].get("id")
+                message_text = "[Voice Note]" 
+            elif msg_data.get("type") == "image":
+                media_type = "image"
+                media_id = msg_data["image"].get("id")
+                message_text = msg_data["image"].get("caption", "[Image]")
                 
-            # If the user has a profile name, we can prepend it or store it, 
-            # but for our LLM, we just pass the text.
-            
             # Convert timestamp
             timestamp_int = int(msg_data.get("timestamp", 0))
             created_at = datetime.utcfromtimestamp(timestamp_int).isoformat() + "Z" if timestamp_int else datetime.utcnow().isoformat()
@@ -228,8 +236,8 @@ async def webhook_whatsapp(payload: dict, background_tasks: BackgroundTasks, db:
                 "group_id": None,
                 "business_id": None,
                 "message_text": message_text,
-                "media_type": None,
-                "media_id": None,
+                "media_type": media_type,
+                "media_id": media_id,
                 "conversation_type": "personal",
                 "forwarded_count": 0,
                 "is_broadcast": 0,
