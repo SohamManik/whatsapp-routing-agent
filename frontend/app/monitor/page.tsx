@@ -40,6 +40,15 @@ export default function MonitorPage() {
           setEvents(prev => [data, ...prev].slice(0, 100)); // keep last 100
         } catch (e) {}
       };
+      
+      // Keep-alive ping to prevent Render from dropping idle connection
+      const pingInterval = setInterval(() => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({ type: "ping" }));
+        }
+      }, 30000);
+      
+      ws.addEventListener('close', () => clearInterval(pingInterval));
     }
     
     connect();
